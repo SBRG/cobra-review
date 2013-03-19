@@ -8,6 +8,8 @@ def dump_json(in_file):
     x = []; header = []; names = []; types = []
     with open(in_file, 'Ur') as file:
         for i, row in enumerate(csv.reader(file)):
+            if not bool([a for a in row if a!=""]):
+                break
             r = []
             for j, field in enumerate(row):
                 field = unicode(field, 'ISO-8859-1')
