@@ -3,7 +3,7 @@ google.load('visualization', '1.1', {packages: ['controls', 'geochart', 'table']
 
 
 function loadJson() {
-    $.getJSON("finalList.json", function(json) {
+    $.getJSON("data.json", function(json) {
         drawVisualization(json); // this will show the info it in firebug console
     });
 }
@@ -17,6 +17,9 @@ function drawVisualization(json) {
     }
 
     data.addRows(json.data);
+    var show_data = new google.visualization.DataView(data);
+    // for (var i=1, a=[]; i<=11; i++) a.push(i);
+    show_data.hideColumns([11, 12]);
 
     // Define a slider control for the 'Donuts eaten' column
     var slider = new google.visualization.ControlWrapper({
@@ -29,17 +32,17 @@ function drawVisualization(json) {
     });
 
 
-	// Define a StringFilter control for the 'Name' column
-	var stringFilter = new google.visualization.ControlWrapper({
-		'controlType': 'StringFilter',
-		'containerId': 'control2',
-		'options': {
-			'filterColumnLabel': 'Authors',
-			'matchType': 'any',
-			'caseSensitive': false,
-			'ui': {'labelStacking': 'vertical'}
-		}
-	});
+    // Define a StringFilter control for the 'Name' column
+    var stringFilter = new google.visualization.ControlWrapper({
+        'controlType': 'StringFilter',
+        'containerId': 'control2',
+        'options': {
+            'filterColumnLabel': 'Authors',
+            'matchType': 'any',
+            'caseSensitive': false,
+            'ui': {'labelStacking': 'vertical'}
+        }
+    });
 
     var cssClassNames = {
         'headerRow': '',// 'small-font blue-background',
@@ -50,7 +53,7 @@ function drawVisualization(json) {
         'headerCell': '',
         'tableCell': '',
         'rowNumberCell': ''
-	};
+    };
 
 
     // Define a table
@@ -61,7 +64,8 @@ function drawVisualization(json) {
             'showRowNumber': true,
             'alternatingRowStyle': true,
             'page': 'enable',
-            'pageSize': 6,
+	    'height': '800px',
+            'pageSize': 50,
             'cssClassNames': cssClassNames
         }
     });
@@ -70,19 +74,19 @@ function drawVisualization(json) {
     new google.visualization.Dashboard(document.getElementById('dashboard'))
         .bind([slider, stringFilter], [table])
     // Draw the dashboard
-        .draw(data);
+        .draw(show_data);
 
 
-	var map_data = new google.visualization.DataView(data);
-	map_data.setColumns([33]);
-	for (var i=1, a=[]; i<=20; i++) a.push(i);
-	map_data.setRows(a);
+    var map_data = new google.visualization.DataView(data);
+    map_data.setColumns([11]);
+    for (var i=1, a=[]; i<=20; i++) a.push(i);
+    map_data.setRows(a);
 
     var options = {
         'region': 'world',
         'displayMode': 'markers',
-		'magnifyingGlass': {'enable': false},
-		'markerOpacity': 0.5
+        'magnifyingGlass': {'enable': false},
+        'markerOpacity': 0.5
     };
 
     var chart = new google.visualization.GeoChart(document.getElementById('map'));
