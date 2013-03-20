@@ -9,6 +9,8 @@ function loadJson() {
 }
 
 function drawVisualization(json) {
+    $("#table").height($(window).height()-$("#map").height()-15);
+
     // Prepare the data
     var data = new google.visualization.DataTable();
 
@@ -64,18 +66,42 @@ function drawVisualization(json) {
             'showRowNumber': true,
             'alternatingRowStyle': true,
             'page': 'enable',
-	    'height': '800px',
             'pageSize': 50,
             'cssClassNames': cssClassNames
         }
     });
+    window.table = table;
+    window.added_listener = false;
+    window.added_width_listener = false;
 
     // Create the dashboard.
-    new google.visualization.Dashboard(document.getElementById('dashboard'))
-        .bind([slider, stringFilter], [table])
-    // Draw the dashboard
-        .draw(show_data);
+    var dash = new google.visualization.Dashboard(document.getElementById('dashboard'));
+    dash.bind([slider, stringFilter], [table]).draw(show_data);
 
+    var set_widths = function ()  {
+        // set the width of the column with the title "Name" to 100px
+        var title = "Authors";
+        $('.google-visualization-table-th:contains(' + title + ')').css('width', '100px');
+    }
+    google.visualization.events.addListener(table, 'ready', function () {
+	console.log('table ready');
+        set_widths();
+		if (!window.added_width_listener) {
+			window.added_width_listener = true;
+			google.visualization.events.addListener(table.getChart(), 'sort', set_widths);
+		}
+    });
+
+    google.visualization.events.addListener(dash, 'ready', function () {
+        console.log('dash ready');
+        if (!window.added_listener) {
+			window.added_listener = true;
+            $(window).resize( $.debounce( 250, function() {
+				console.log('redrawing');
+                window.table.draw();
+            }))
+		} 
+    });
 
     var map_data = new google.visualization.DataView(data);
     map_data.setColumns([11]);
