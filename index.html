@@ -18,12 +18,12 @@
 
   </head>
   <body style="font-family: Helvetica; border: 0 none;">
-    <div id="map" style="position:absolute; visibility:hidden; background-color:rgba(255,255,255,0.6); border:2px solid black;"></div>
-    <div id="terms" style="position:absolute; visibility:hidden; background-color:rgba(255,255,255,0.6); border:2px solid black;">
-Definitions of Terms:
+    <div id="map" style="position:absolute; visibility:hidden; background-color:rgb(255,255,255); border:2px solid black;"></div>
+    <div id="terms" style="position:absolute; visibility:hidden; background-color:rgb(255,255,255); border:2px solid black; padding:10px; overflow:scroll;">
+<h3>Definitions of Terms:</h3>
 
+Computational Prediction – Type of constraint-based modeling prediction used
 <ul>
-<li>Computational Prediction – Type of constraint-based modeling prediction used</li>
 <li>Flux Phenotype – Calculation of metabolic fluxes, nutrient uptake, or growth rate</li>
 <li>Essentiality (Global) – Untargeted screen of knockouts</li>
 <li>Knockout (KO, Targeted) – Targeted growth of select mutants or rational selection of knockouts</li>
@@ -37,14 +37,18 @@ Definitions of Terms:
 <li>Experimental Design (ExpDes) – Modeling analysis is used to design new experiments</li>
 <li>Pathway Analysis – Utilizes Extreme Pathways or Elementary Flux Modes and their derivatives</li>
 <li>Other Phenotype – miscellaneous</li>
-<li>High-throughput data integration – Type of high-throughput data integrated with modeling for predictions</li>
-<li>Prediction Application – General field that predictions are used for</li>
+</ul>
+High-throughput data integration – Type of high-throughput data integrated with modeling for predictions<br/>
+Prediction Application – General field that predictions are used for
+<ul>
 <li>General biological sciences – </li>
 <li>Met Eng – metabolic engineering</li>
 <li>Inf – infectious disease</li>
 <li>Env – environmental</li>
 <li>Biomed – biomedical sciences</li>
-<li>Consistent with experiments – computational predictions are compared to experimental data</li>
+</ul>
+Consistent with experiments – computational predictions are compared to experimental data
+<ul>
 <li>Legacy data – consistent with experiments in previous publications</li>
 <li>Prospective experimental validation – experiments are performed in the publication</li>
 </ul>
@@ -54,47 +58,63 @@ Note: Key papers are highlighted in red.
     <div id="dashboard" style="margin: 0px auto; width: 100%">
       <div id="control1" style="width: 300px;height: 60px; float: left;">LOADING...</div>
       <div id="control2" style="width: 300px;height: 60px; float: left;"></div>
-      <div id="buttons" style="width:300px; float: right;">
+      <div id="buttons" style="float: right;">
         <a id="logout-button" href="http://zak.ucsd.edu/logout" style="float: right;">Log out</a>
-        <a id="map-button" style="float: right;">show map</a>
-        <a id="terms-button" style="float: right;">show term definitions</a>
+        <a id="map-button" style="float: right;">map</a>
+        <a id="terms-button" style="float: right;">legend</a>
       </div>
       <div id="table" style="width:100%; height:100%; float: left;"></div>
     </div>
 
     <script type="text/javascript">
-      $("#map-button").button({ disabled: true }).click(function (event) {
+      $("#map-button").button({ disabled: true, icons: { primary: "ui-icon-circle-plus" } }).click(function (event) {
           event.preventDefault();
           if ($('#map').css('visibility') == 'hidden') {
-              $(this).button( "option", "label", "hide map" );
-              $('#map').css('visibility','visible');
-              $('#map').css('z-index','50');
-              $("#map").height($(window).height()*0.9);
-              $("#map").width($(window).width()*0.9);
-              $("#map").css('left', $(window).width()*0.05);
-              $("#map").css('top', Math.max($(window).height()*0.05, 50));
-              map.draw(window.map_data, window.map_options);s
+			  hideLegend();
+			  showMap();
           } else {
-              $(this).button( "option", "label", "show map" );
-              $('#map').css('visibility','hidden');
+			  hideMap();
           }
       });
-	  $("#terms-button").button({ disabled: true }).click(function (event) {
+	  $("#terms-button").button({icons: { primary: "ui-icon-circle-plus" }}).click(function (event) {
           event.preventDefault();
           if ($('#terms').css('visibility') == 'hidden') {
-              $(this).button( "option", "label", "hide map" );
-              $('#terms').css('visibility','visible');
-              $('#terms').css('z-index','50');
-              $("#terms").height($(window).height()*0.9);
-              $("#terms").width($(window).width()*0.9);
-              $("#terms").css('left', $(window).width()*0.05);
-              $("#terms").css('top', Math.max($(window).height()*0.05, 50));
-              map.draw(window.map_data, window.map_options);s
+			  hideMap();
+			  showLegend();
           } else {
-              $(this).button( "option", "label", "show map" );
-              $('#terms').css('visibility','hidden');
+			  hideLegend();
           }
       });
+
+	  function showMap() {
+          $('#map-button').button( "option", "icons", { primary: "ui-icon-circle-minus" });
+          $('#map').css('visibility','visible');
+          $('#map').css('z-index','50');
+          $("#map").outerHeight($(window).height()*0.9);
+          $("#map").outerWidth($(window).width()*0.9);
+          $("#map").css('left', $(window).width()*0.05);
+          $("#map").css('top', Math.max($(window).height()*0.05, 50));
+          map.draw(window.map_data, window.map_options);
+	  }
+	  function hideMap() {
+          $('#map-button').button( "option", "icons", { primary: "ui-icon-circle-plus" });
+          $('#map').css('visibility','hidden');
+	  }
+	  function showLegend() {
+          $('#terms-button').button( "option", "icons", { primary: "ui-icon-circle-minus" });
+          $('#terms').css('visibility','visible');
+          $('#terms').css('z-index','50');
+          $("#terms").outerHeight($(window).height()*0.9);
+          $("#terms").outerWidth($(window).width()*0.9);
+          $("#terms").css('left', $(window).width()*0.05);
+          $("#terms").css('top', Math.max($(window).height()*0.05, 50));
+          map.draw(window.map_data, window.map_options);
+	  }
+	  function hideLegend() {
+          $('#terms-button').button( "option", "icons", { primary: "ui-icon-circle-plus" });
+          $('#terms').css('visibility','hidden');
+	  }
+
       $("#logout-button").button();
     </script>
 
