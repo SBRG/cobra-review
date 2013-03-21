@@ -4,12 +4,32 @@ google.load('visualization', '1.1', {packages: ['controls', 'geochart', 'table']
 
 function loadJson() {
     $.getJSON("data.json", function(json) {
-        drawVisualization(json); // this will show the info it in firebug console
+        drawVisualization(json);
+    });
+    $.getJSON("map_statistics.json", function(json) {
+        drawMap(json);
     });
 }
 
+function drawMap(json) {
+    // console.log('map data');
+    // console.log(json);
+    window.map_data = new google.visualization.arrayToDataTable(json);
+
+    window.map_options = {
+        'region': 'world',
+        'displayMode': 'markers',
+        'magnifyingGlass': {'enable': false},
+        'markerOpacity': 0.6
+    };
+
+    window.map = new google.visualization.GeoChart(document.getElementById('map'));
+
+    $('#map-button').button( "option", "disabled", false );
+}
+
 function drawVisualization(json) {
-    $("#table").height($(window).height()-$("#map").height()-15);
+    $("#table").height($(window).height()-$("#control1").height()-15);
 
     // Prepare the data
     var data = new google.visualization.DataTable();
@@ -67,7 +87,8 @@ function drawVisualization(json) {
             'alternatingRowStyle': true,
             'page': 'enable',
             'pageSize': 50,
-            'cssClassNames': cssClassNames
+            'cssClassNames': cssClassNames,
+			'allowHtml': true
         }
     });
     window.table = table;
@@ -84,40 +105,24 @@ function drawVisualization(json) {
         $('.google-visualization-table-th:contains(' + title + ')').css('width', '100px');
     }
     google.visualization.events.addListener(table, 'ready', function () {
-	console.log('table ready');
+        console.log('table ready');
         set_widths();
-		if (!window.added_width_listener) {
-			window.added_width_listener = true;
-			google.visualization.events.addListener(table.getChart(), 'sort', set_widths);
-		}
+        if (!window.added_width_listener) {
+            window.added_width_listener = true;
+            google.visualization.events.addListener(table.getChart(), 'sort', set_widths);
+        }
     });
 
     google.visualization.events.addListener(dash, 'ready', function () {
         console.log('dash ready');
         if (!window.added_listener) {
-			window.added_listener = true;
+            window.added_listener = true;
             $(window).resize( $.debounce( 250, function() {
-				console.log('redrawing');
+                console.log('redrawing');
                 window.table.draw();
             }))
-		} 
+        }
     });
-
-    var map_data = new google.visualization.DataView(data);
-    map_data.setColumns([11]);
-    for (var i=1, a=[]; i<=20; i++) a.push(i);
-    map_data.setRows(a);
-
-    var options = {
-        'region': 'world',
-        'displayMode': 'markers',
-        'magnifyingGlass': {'enable': false},
-        'markerOpacity': 0.5
-    };
-
-    var chart = new google.visualization.GeoChart(document.getElementById('map'));
-    chart.draw(map_data, options);
-
 }
 
 
