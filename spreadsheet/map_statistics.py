@@ -33,10 +33,10 @@ for k in count.keys():
     lng[k] = location["lng"]
 # output to json file
 output_filename = "map_statistics.json"
-array = [['Lat', 'Long', 'Papers']]
+array = [['Lat', 'Long', 'Location', 'Papers']]
 for k, v in count.items():
     try:
-        array.append([lat[k], lng[k], v])
+        array.append([lat[k], lng[k], unicode(k, 'ISO-8859-1'), v])
     except KeyError:
         continue
 with open(output_filename, 'w') as file:

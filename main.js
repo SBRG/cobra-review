@@ -17,10 +17,11 @@ function drawMap(json) {
     window.map_data = new google.visualization.arrayToDataTable(json);
 
     window.map_options = {
-        'region': 'world',
+        'region': 'US',
         'displayMode': 'markers',
         'magnifyingGlass': {'enable': false},
-        'markerOpacity': 0.6
+	'color': [0xFF8747, 0xFFB581, 0xc06000],
+        'markerOpacity': 1.0
     };
 
     window.map = new google.visualization.GeoChart(document.getElementById('map'));
