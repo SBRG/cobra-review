@@ -1,5 +1,6 @@
 from sys import argv
 import json, csv
+from IPython import embed
 
 def dump_json(in_file):
     """ convert csv file to json array
