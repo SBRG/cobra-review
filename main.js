@@ -56,11 +56,33 @@ function drawVisualization(json) {
 
 
     // Define a StringFilter control for the 'Name' column
-    var stringFilter = new google.visualization.ControlWrapper({
+    var authorFilter = new google.visualization.ControlWrapper({
         'controlType': 'StringFilter',
-        'containerId': 'control2',
+        'containerId': 'authorControl',
         'options': {
             'filterColumnLabel': 'Authors',
+            'matchType': 'any',
+            'caseSensitive': false,
+            'ui': {'labelStacking': 'vertical'}
+        }
+    });
+    
+    var titleFilter = new google.visualization.ControlWrapper({
+        'controlType': 'StringFilter',
+        'containerId': 'titleControl',
+        'options': {
+            'filterColumnLabel': 'Title',
+            'matchType': 'any',
+            'caseSensitive': false,
+            'ui': {'labelStacking': 'vertical'}
+        }
+    });
+    
+    var journalFilter = new google.visualization.ControlWrapper({
+        'controlType': 'StringFilter',
+        'containerId': 'journalControl',
+        'options': {
+            'filterColumnLabel': 'Journal',
             'matchType': 'any',
             'caseSensitive': false,
             'ui': {'labelStacking': 'vertical'}
@@ -98,7 +120,8 @@ function drawVisualization(json) {
 
     // Create the dashboard.
     var dash = new google.visualization.Dashboard(document.getElementById('dashboard'));
-    dash.bind([slider, stringFilter], [table]).draw(show_data);
+    dash.bind([slider, authorFilter, titleFilter, journalFilter], [table]).draw(show_data);
+    
 
     var set_widths = function ()  {
         // set the width of the column with the title "Name" to 100px
@@ -113,6 +136,8 @@ function drawVisualization(json) {
             google.visualization.events.addListener(table.getChart(), 'sort', set_widths);
         }
     });
+    
+    
 
     google.visualization.events.addListener(dash, 'ready', function () {
         console.log('dash ready');
