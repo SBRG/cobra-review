@@ -1,11 +1,12 @@
 from sys import argv
 import json, csv
+from IPython import embed
 
 def dump_json(in_file):
     """ convert csv file to json array
     """
     out_file = in_file.replace('csv','json')
-    x = []; header = []; names = []; types = []
+    data = []; header = []; names = []; types = []
     with open(in_file, 'Ur') as file:
         for i, row in enumerate(csv.reader(file)):
             if not bool([a for a in row if a!=""]):
@@ -24,11 +25,40 @@ def dump_json(in_file):
             elif i == 1:
                 types = r
             else:
-                x.append(r)
+                data.append(r)
         for i, l in enumerate(names):
             header.append({'name': l, 'type': types[i]})
+    for d in data:
+        pmid = d[4]
+        link = '<a href="http://www.ncbi.nlm.nih.gov/pubmed?term=' + pmid + '" target="_blank">' + pmid + '</a>'
+        d[4] = link
+        
+        ut = d[13]
+        citations = d[14]
+        
+        if ut != '':
+            wos_link = '<a href="'
+            wos_link += 'http://gateway.webofknowledge.com/gateway/Gateway.cgi?GWVersion=2&SrcApp=PARTNER_APP&SrcAuth=LinksAMR&KeyUT='
+            wos_link += ut
+            wos_link += '&DestLinkType=CitingArticles&DestApp=ALL_WOS" target="_blank">'
+            # wos_link += '&DestLinkType=FullRecords&DestApp=ALL_WOS" target="_blank">'
+            wos_link += str(citations).strip('.0') + '</a>'
+            # embed()
+        else:
+            wos_link = str(citations).strip('.0')
+        
+        d[13] = wos_link
+        d.pop(-1)
+        
+    citations_header = header.pop(-1)
+    header[-1] = citations_header
+        
+    # embed()
+    
+    
     with open(out_file,'w') as file:
-        json.dump({'header':header, 'data':x},file)
+        json.dump({'header':header, 'data':data},file)
+    
     return out_file
 
 if __name__ == '__main__':
@@ -56,3 +86,5 @@ def sort_categories():
     with open(file_name_out, 'w') as out_file:
         for s in c:
             out_file.write("%s\n" % s)
+
+
