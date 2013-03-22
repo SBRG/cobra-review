@@ -35,13 +35,15 @@ def dump_json(in_file):
         
         ut = d[13]
         citations = d[14]
-        
+                
         if ut != '':
             wos_link = '<a href="'
             wos_link += 'http://gateway.webofknowledge.com/gateway/Gateway.cgi?GWVersion=2&SrcApp=PARTNER_APP&SrcAuth=LinksAMR&KeyUT='
-            wos_link += ut
-            wos_link += '&DestLinkType=CitingArticles&DestApp=ALL_WOS" target="_blank">'
-            # wos_link += '&DestLinkType=FullRecords&DestApp=ALL_WOS" target="_blank">'
+            # temp:
+            # ut = '309817900001'
+            wos_link += ut.zfill(15)
+            # wos_link += '&DestLinkType=CitingArticles&DestApp=ALL_WOS" target="_blank">'
+            wos_link += '&DestLinkType=FullRecord&DestApp=ALL_WOS&UsrCustomerID=3b43717f41be607aa14afe1bd1c6ec43" target="_blank">'
             wos_link += str(citations).strip('.0') + '</a>'
             # embed()
         else:
