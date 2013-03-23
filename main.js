@@ -31,6 +31,10 @@ function drawMap(json) {
 
 function drawVisualization(json) {
     $("#table").height($(window).height()-$("#control1").height()-15);
+    $("#charts").outerHeight($(window).height()*0.9);
+    $("#charts").outerWidth($(window).width()*0.9);
+    $("#charts").css('left', $(window).width()*0.05);
+    $("#charts").css('top', Math.max($(window).height()*0.05, 70));
 
     // Prepare the data
     var data = new google.visualization.DataTable();
@@ -96,9 +100,31 @@ function drawVisualization(json) {
     window.added_listener = false;
     window.added_width_listener = false;
 
+    var chart1 = new google.visualization.ChartWrapper({
+	'chartType': 'PieChart',
+	'containerId': 'chart1',
+	'width': '100%',
+	'height': '100%',
+	'chartArea': {
+	    'width': '100%',
+	    'height': '100%'
+	},
+	'options': {
+	    'sliceVisibilityThreshold': 0.01,
+	    'width': '100%'
+	},
+	'view': {'columns': [9]}
+    });
+
+    // var chart2 = new google.visualization.ChartWrapper({
+    // 	'chartType': 'Pie',
+    // 	'containerId': 'chart1',
+    // 	'options': {}
+    // });
+
     // Create the dashboard.
     var dash = new google.visualization.Dashboard(document.getElementById('dashboard'));
-    dash.bind([slider, stringFilter], [table]).draw(show_data);
+    dash.bind([slider, stringFilter], [table, chart1]).draw(show_data);
 
     var set_widths = function ()  {
         // set the width of the column with the title "Name" to 100px
