@@ -18,14 +18,9 @@
       
       #panel
         {
-        padding:5px;
-        text-align:center;
+        padding:0px;
         background-color:#E5CCFF;
         border:solid 1px #c3c3c3;
-        }
-        #panel
-        {
-        padding:50px;
         }
     </style>
     <!-- <link rel="stylesheet" href="style.css" type="text/css" /> -->
@@ -83,7 +78,7 @@
       <div id="chart1" style="float:left; width:40%; left:5%; height:100%;"></div>      
       <div id="chart2" style="float:right; width:40%; right:5%"></div>
     </div>
-    
+     
     <div id="dashboard" style="margin: 0px auto; width: 100%">
      <div id="buttons" style="float: right; margin: 0px auto; width: 100%">
         <a id="logout-button" href="http://zak.ucsd.edu/logout" style="float: right;">Log out</a>
@@ -92,7 +87,8 @@
         <a id="charts-button" style="float: right;">charts</a>
         <a id="filter-button" style="float: right;">filter</a>
       </div>
-      <div id="panel" style="float: left; margin: 0px auto; width: 100%">
+      <div id="panel" style="float: left; margin: 0px auto; width: 100%;display:none;">
+        <div id="filters" style="width:88%; margin:0px auto;">
           <div id="authorControl" style="width: 200px;height: 60px; float: left;">LOADING...</div>
           <div id="titleControl" style="width: 200px;height: 60px; float: left;"></div>
           <div id="journalControl" style="width: 200px;height: 60px; float: left;"></div>
@@ -102,7 +98,8 @@
           <div id="expControl" style="width: 200px;height: 60px; float: left;"></div>
           <div id="orgControl" style="width: 200px;height: 60px; float: left;"></div>
           <div id="locControl" style="width: 200px;height: 60px; float: left;"></div>
-        <div id="sliders" style="float: left; margin: 0px auto; width: 100%">
+        </div>
+        <div id="sliders" style=" margin: 0px auto; width: 30%">
           <div id="yearControl" style="width: 300px;height: 60px; float: left;"></div>
           <div id="citationControl" style="width: 300px;height: 60px; float: left;"></div>
         </div>
