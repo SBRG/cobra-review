@@ -49,7 +49,6 @@ function drawVisualization(json) {
     show_data.hideColumns([11, 12]);
 
     // Define a slider control for the 'Donuts eaten' column
-    var slider = new google.visualization.ControlWrapper({
     var yearSlider = new google.visualization.ControlWrapper({
         'controlType': 'NumberRangeFilter',
         'containerId': 'control1',
