@@ -1,7 +1,109 @@
+
+// Set up buttons
+
+$("#filter-button").button({ disabled: false, icons: { primary: "ui-icon-circle-plus" } }).click(function (event) {
+    if ($('#panel').css('display') == 'none') {
+        event.preventDefault();
+        showFilterOptions();
+    } else {
+        hideFilterOptions();
+    }
+});
+$("#map-button").button({ disabled: true, icons: { primary: "ui-icon-circle-plus" } }).click(function (event) {
+    event.preventDefault();
+    if ($('#map').css('visibility') == 'hidden') {
+        hideLegend();
+        hideCharts();
+        showMap();
+
+    } else {
+        hideMap();
+    }
+});
+$("#terms-button").button({icons: { primary: "ui-icon-circle-plus" }}).click(function (event) {
+    event.preventDefault();
+    if ($('#terms').css('visibility') == 'hidden') {
+        hideMap();
+        hideCharts();
+        showLegend();
+    } else {
+        hideLegend();
+    }
+});
+$("#charts-button").button({icons: { primary: "ui-icon-circle-plus" }}).click(function (event) {
+    event.preventDefault();
+    if ($('#charts').css('visibility') == 'hidden') {
+        hideMap();
+        hideLegend();
+        showCharts();
+        showFilterOptions();
+    } else {
+        hideCharts();
+    }
+});
+
+function showMap() {
+    $('#map-button').button( "option", "icons", { primary: "ui-icon-circle-minus" });
+    $('#map').css('visibility','visible');
+    $('#map').css('z-index','50');
+    $("#map").outerHeight($(window).height()*0.9);
+    $("#map").outerWidth($(window).width()*0.9);
+    $("#map").css('left', $(window).width()*0.05);
+    $("#map").css('top', Math.max($(window).height()*0.05, 70));
+    window.map.draw(window.map_data, window.map_options);
+}
+function hideMap() {
+    $('#map-button').button( "option", "icons", { primary: "ui-icon-circle-plus" });
+    $('#map').css('visibility','hidden');
+}
+function showLegend() {
+    $('#terms-button').button( "option", "icons", { primary: "ui-icon-circle-minus" });
+    $('#terms').css('visibility','visible');
+    $('#terms').css('z-index','50');
+    $("#terms").outerHeight($(window).height()*0.9);
+    $("#terms").outerWidth($(window).width()*0.9);
+    $("#terms").css('left', $(window).width()*0.05);
+    $("#terms").css('top', Math.max($(window).height()*0.05, 70));
+}
+function hideLegend() {
+    $('#terms-button').button( "option", "icons", { primary: "ui-icon-circle-plus" });
+    $('#terms').css('visibility','hidden');
+}
+function showFilterOptions() {
+    $('#filter-button').button( "option", "icons", { primary: "ui-icon-circle-minus" });
+    $("#panel").slideDown("slow");
+}
+function hideFilterOptions() {
+    $('#filter-button').button( "option", "icons", { primary: "ui-icon-circle-plus" });
+    $("#panel").slideUp("slow");
+}
+function showCharts() {
+    $('#charts-button').button( "option", "icons", { primary: "ui-icon-circle-minus" });
+    $('#charts').css('visibility','visible');
+    $('#charts').css('z-index','50');
+    sizeTheCharts();
+}
+function hideCharts() {
+    $('#charts-button').button( "option", "icons", { primary: "ui-icon-circle-plus" });
+    $('#charts').css('visibility','hidden');
+}
+
+$("#logout-button").button();
+
+function sizeTheCharts() {
+    var t =  Math.max($(window).height()*0.05, 180)
+    $("#charts").outerHeight(($(window).height() - t)*0.9);
+    $("#charts").outerWidth($(window).width()*0.9);
+    $("#charts").css('left', $(window).width()*0.05);
+    $("#charts").css('top', t);
+}
+
+
+
 // load Google visualization packages
 google.load('visualization', '1.1', {packages: ['controls', 'geochart', 'table']});
 
-
+// load the json
 function loadJson() {
     $.getJSON("data.json", function(json) {
         drawVisualization(json);
@@ -20,7 +122,7 @@ function drawMap(json) {
         'region': 'world',
         'displayMode': 'markers',
         'magnifyingGlass': {'enable': false},
-	'color': [0xFF8747, 0xFFB581, 0xc06000],
+        'color': [0xFF8747, 0xFFB581, 0xc06000],
         'markerOpacity': 1.0
     };
 
@@ -31,10 +133,7 @@ function drawMap(json) {
 
 function drawVisualization(json) {
     $("#table").height($(window).height()-$("#control1").height()-15);
-    $("#charts").outerHeight($(window).height()*0.9);
-    $("#charts").outerWidth($(window).width()*0.9);
-    $("#charts").css('left', $(window).width()*0.05);
-    $("#charts").css('top', Math.max($(window).height()*0.05, 70));
+    sizeTheCharts()
 
     // Prepare the data
     var data = new google.visualization.DataTable();
@@ -58,7 +157,7 @@ function drawVisualization(json) {
             'ui': {'labelStacking': 'vertical'}
         }
     });
-    
+
     var citationSlider = new google.visualization.ControlWrapper({
         'controlType': 'NumberRangeFilter',
         'containerId': 'citationControl',
@@ -80,7 +179,7 @@ function drawVisualization(json) {
             'ui': {'labelStacking': 'vertical'}
         }
     });
-    
+
     var titleFilter = new google.visualization.ControlWrapper({
         'controlType': 'StringFilter',
         'containerId': 'titleControl',
@@ -91,7 +190,7 @@ function drawVisualization(json) {
             'ui': {'labelStacking': 'vertical'}
         }
     });
-    
+
     var journalFilter = new google.visualization.ControlWrapper({
         'controlType': 'StringFilter',
         'containerId': 'journalControl',
@@ -102,7 +201,7 @@ function drawVisualization(json) {
             'ui': {'labelStacking': 'vertical'}
         }
     });
-    
+
     var predictionFilter = new google.visualization.ControlWrapper({
         'controlType': 'StringFilter',
         'containerId': 'predictionControl',
@@ -113,7 +212,7 @@ function drawVisualization(json) {
             'ui': {'labelStacking': 'vertical'}
         }
     });
-    
+
     var dataFilter = new google.visualization.ControlWrapper({
         'controlType': 'StringFilter',
         'containerId': 'dataControl',
@@ -124,7 +223,7 @@ function drawVisualization(json) {
             'ui': {'labelStacking': 'vertical'}
         }
     });
-    
+
     var appFilter = new google.visualization.ControlWrapper({
         'controlType': 'StringFilter',
         'containerId': 'appControl',
@@ -135,7 +234,7 @@ function drawVisualization(json) {
             'ui': {'labelStacking': 'vertical'}
         }
     });
-    
+
     var expFilter = new google.visualization.ControlWrapper({
         'controlType': 'StringFilter',
         'containerId': 'expControl',
@@ -146,7 +245,7 @@ function drawVisualization(json) {
             'ui': {'labelStacking': 'vertical'}
         }
     });
-    
+
     var orgFilter = new google.visualization.ControlWrapper({
         'controlType': 'StringFilter',
         'containerId': 'orgControl',
@@ -157,7 +256,7 @@ function drawVisualization(json) {
             'ui': {'labelStacking': 'vertical'}
         }
     });
-    
+
     var locationFilter = new google.visualization.ControlWrapper({
         'controlType': 'StringFilter',
         'containerId': 'locControl',
@@ -191,7 +290,7 @@ function drawVisualization(json) {
             'page': 'enable',
             'pageSize': 50,
             'cssClassNames': cssClassNames,
-			'allowHtml': true
+            'allowHtml': true
         }
     });
     window.table = table;
@@ -199,34 +298,35 @@ function drawVisualization(json) {
     window.added_width_listener = false;
 
     var chart1 = new google.visualization.ChartWrapper({
-	'chartType': 'PieChart',
-	'containerId': 'chart1',
-	'width': '100%',
-	'height': '100%',
-	'chartArea': {
-	    'width': '100%',
-	    'height': '100%'
-	},
-	'options': {
-	    'sliceVisibilityThreshold': 0.01,
-	    'width': '100%'
-	},
-	'view': {'columns': [9]}
+        'chartType': 'PieChart',
+        'containerId': 'chart1',
+        'width': '100%',
+        'height': '100%',
+        'chartArea': {
+            'width': '100%',
+            'height': '100%'
+        },
+        'options': {
+            'sliceVisibilityThreshold': 0.01,
+            'width': '100%'
+        },
+        'view': {'columns': [9]}
     });
 
     // var chart2 = new google.visualization.ChartWrapper({
-    // 	'chartType': 'Pie',
-    // 	'containerId': 'chart1',
-    // 	'options': {}
+    //  'chartType': 'Pie',
+    //  'containerId': 'chart1',
+    //  'options': {}
     // });
 
     // Create the dashboard.
     var dash = new google.visualization.Dashboard(document.getElementById('dashboard'));
-    dash.bind([yearSlider, citationSlider, authorFilter, titleFilter, journalFilter, 
-	       predictionFilter, dataFilter, appFilter, expFilter, orgFilter, locationFilter], 
-	      [table, chart1]).draw(show_data);
-    
+    dash.bind([yearSlider, citationSlider, authorFilter, titleFilter, journalFilter,
+               predictionFilter, dataFilter, appFilter, expFilter, orgFilter, locationFilter],
+              [table, chart1]).draw(show_data);
 
+
+    // Set up resize listeners
     var set_widths = function ()  {
         // set the width of the column with the title "Name" to 100px
         var title = "Authors";
@@ -240,8 +340,6 @@ function drawVisualization(json) {
             google.visualization.events.addListener(table.getChart(), 'sort', set_widths);
         }
     });
-    
-    
 
     google.visualization.events.addListener(dash, 'ready', function () {
         console.log('dash ready');
@@ -255,5 +353,5 @@ function drawVisualization(json) {
     });
 }
 
-
+// load the map after page load
 google.setOnLoadCallback(loadJson);
