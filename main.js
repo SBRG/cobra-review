@@ -50,7 +50,7 @@ function showMap() {
     $("#map").outerWidth($(window).width()*0.9);
     $("#map").css('left', $(window).width()*0.05);
     $("#map").css('top', Math.max($(window).height()*0.05, 70));
-    window.map.draw(window.map_data, window.map_options);
+    drawTheMap();
 }
 function hideMap() {
     $('#map-button').button( "option", "icons", { primary: "ui-icon-circle-plus" });
@@ -102,6 +102,10 @@ function sizeTheCharts() {
     $("#charts").css('top', t);
 }
 
+function drawTheMap() {
+    window.map.draw(window.map_data, window.map_options);
+}
+
 
 
 // load Google visualization packages
@@ -127,7 +131,12 @@ function drawMap(json) {
         'displayMode': 'markers',
         'magnifyingGlass': {'enable': false},
         'color': [0xFF8747, 0xFFB581, 0xc06000],
-        'markerOpacity': 1.0
+        'markerOpacity': 1.0,  
+	'backgroundColor': '#FFFFFF',
+	'datalessRegionColor': '#E5E5E5',
+	'colorAxis': { 'colors': ['#438094','#DE3403']},
+	'sizeAxis':  {'minSize': 5,  'maxSize': 10}
+	// 'resolution'
     };
 
     window.map = new google.visualization.GeoChart(document.getElementById('map'));
