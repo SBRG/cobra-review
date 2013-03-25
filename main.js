@@ -222,7 +222,9 @@ function drawVisualization(json) {
 
     // Create the dashboard.
     var dash = new google.visualization.Dashboard(document.getElementById('dashboard'));
-    dash.bind([yearSlider, citationSlider, authorFilter, titleFilter, journalFilter, predictionFilter, dataFilter, appFilter, expFilter, orgFilter, locationFilter], [table]).draw(show_data);
+    dash.bind([yearSlider, citationSlider, authorFilter, titleFilter, journalFilter, 
+	       predictionFilter, dataFilter, appFilter, expFilter, orgFilter, locationFilter], 
+	      [table, chart1]).draw(show_data);
     
 
     var set_widths = function ()  {
