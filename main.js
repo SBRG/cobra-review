@@ -134,7 +134,7 @@ function drawMap(json) {
         'markerOpacity': 1.0,  
 	'backgroundColor': '#FFFFFF',
 	'datalessRegionColor': '#E5E5E5',
-	'colorAxis': { 'colors': ['#438094','#DE3403']},
+	'colorAxis': { 'colors': ['#6BAED6','#08519C']},
 	'sizeAxis':  {'minSize': 5,  'maxSize': 10}
 	// 'resolution'
     };
