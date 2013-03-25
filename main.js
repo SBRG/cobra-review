@@ -209,7 +209,7 @@ function drawVisualization(json) {
         'controlType': 'StringFilter',
         'containerId': 'predictionControl',
         'options': {
-            'filterColumnLabel': 'Type of Prediction',
+            'filterColumnLabel': 'Computational Prediction',
             'matchType': 'any',
             'caseSensitive': false,
             'ui': {'labelStacking': 'vertical'}
@@ -220,7 +220,7 @@ function drawVisualization(json) {
         'controlType': 'StringFilter',
         'containerId': 'dataControl',
         'options': {
-            'filterColumnLabel': 'Data Integration',
+            'filterColumnLabel': 'High-throughput data integration',
             'matchType': 'any',
             'caseSensitive': false,
             'ui': {'labelStacking': 'vertical'}
@@ -231,7 +231,7 @@ function drawVisualization(json) {
         'controlType': 'StringFilter',
         'containerId': 'appControl',
         'options': {
-            'filterColumnLabel': 'Application of Prediction',
+            'filterColumnLabel': 'Prediction Application',
             'matchType': 'any',
             'caseSensitive': false,
             'ui': {'labelStacking': 'vertical'}
@@ -242,7 +242,7 @@ function drawVisualization(json) {
         'controlType': 'StringFilter',
         'containerId': 'expControl',
         'options': {
-            'filterColumnLabel': 'Experimental Validation',
+            'filterColumnLabel': 'Consistent with experiments',
             'matchType': 'any',
             'caseSensitive': false,
             'ui': {'labelStacking': 'vertical'}
