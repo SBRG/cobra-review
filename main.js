@@ -9,7 +9,7 @@ $("#filter-button").button({ disabled: false, icons: { primary: "ui-icon-circle-
         hideFilterOptions();
     }
 });
-$("#map-button").button({ disabled: true, icons: { primary: "ui-icon-circle-plus" } }).click(function (event) {
+$("#map-button").button({ disabled: false, icons: { primary: "ui-icon-circle-plus" } }).click(function (event) {
     event.preventDefault();
     if ($('#map').css('visibility') == 'hidden') {
         hideLegend();
@@ -71,7 +71,11 @@ function hideLegend() {
 }
 function showFilterOptions() {
     $('#filter-button').button( "option", "icons", { primary: "ui-icon-circle-minus" });
-    $("#panel").slideDown("slow");
+    $("#panel").slideDown("slow", function() {
+	for (var i=0; i<window.redrawFilters.length; i++) {
+	    window.redrawFilters[i].draw();
+	}
+    });
 }
 function hideFilterOptions() {
     $('#filter-button').button( "option", "icons", { primary: "ui-icon-circle-plus" });
@@ -127,8 +131,6 @@ function drawMap(json) {
     };
 
     window.map = new google.visualization.GeoChart(document.getElementById('map'));
-
-    $('#map-button').button( "option", "disabled", false );
 }
 
 function drawVisualization(json) {
@@ -166,6 +168,7 @@ function drawVisualization(json) {
             'ui': {'labelStacking': 'vertical'}
         }
     });
+    window.redrawFilters = [yearSlider, citationSlider];
 
 
     // Define a StringFilter control for the 'Name' column
@@ -279,7 +282,6 @@ function drawVisualization(json) {
         'rowNumberCell': ''
     };
 
-
     // Define a table
     var table = new google.visualization.ChartWrapper({
         'chartType': 'Table',
@@ -312,12 +314,6 @@ function drawVisualization(json) {
         },
         'view': {'columns': [9]}
     });
-
-    // var chart2 = new google.visualization.ChartWrapper({
-    //  'chartType': 'Pie',
-    //  'containerId': 'chart1',
-    //  'options': {}
-    // });
 
     // Create the dashboard.
     var dash = new google.visualization.Dashboard(document.getElementById('dashboard'));
