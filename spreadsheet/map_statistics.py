@@ -1,6 +1,6 @@
 from collections import defaultdict
 import sys, json, csv, urllib2, json, time
-filename = sys.argv[1]
+filename = sys.argv[1]                  # data.csv
 file = open(filename, 'rU')
 count = defaultdict(int); map_index = 0; first_index = 2
 for row in csv.reader(file):
