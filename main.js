@@ -49,22 +49,120 @@ function drawVisualization(json) {
     show_data.hideColumns([11, 12]);
 
     // Define a slider control for the 'Donuts eaten' column
-    var slider = new google.visualization.ControlWrapper({
+    var yearSlider = new google.visualization.ControlWrapper({
         'controlType': 'NumberRangeFilter',
         'containerId': 'control1',
+        'containerId': 'yearControl',
         'options': {
             'filterColumnLabel': 'Year',
+            'ui': {'labelStacking': 'vertical'}
+        }
+    });
+    
+    var citationSlider = new google.visualization.ControlWrapper({
+        'controlType': 'NumberRangeFilter',
+        'containerId': 'citationControl',
+        'options': {
+            'filterColumnLabel': 'Total Citations',
             'ui': {'labelStacking': 'vertical'}
         }
     });
 
 
     // Define a StringFilter control for the 'Name' column
-    var stringFilter = new google.visualization.ControlWrapper({
+    var authorFilter = new google.visualization.ControlWrapper({
         'controlType': 'StringFilter',
-        'containerId': 'control2',
+        'containerId': 'authorControl',
         'options': {
             'filterColumnLabel': 'Authors',
+            'matchType': 'any',
+            'caseSensitive': false,
+            'ui': {'labelStacking': 'vertical'}
+        }
+    });
+    
+    var titleFilter = new google.visualization.ControlWrapper({
+        'controlType': 'StringFilter',
+        'containerId': 'titleControl',
+        'options': {
+            'filterColumnLabel': 'Title',
+            'matchType': 'any',
+            'caseSensitive': false,
+            'ui': {'labelStacking': 'vertical'}
+        }
+    });
+    
+    var journalFilter = new google.visualization.ControlWrapper({
+        'controlType': 'StringFilter',
+        'containerId': 'journalControl',
+        'options': {
+            'filterColumnLabel': 'Journal',
+            'matchType': 'any',
+            'caseSensitive': false,
+            'ui': {'labelStacking': 'vertical'}
+        }
+    });
+    
+    var predictionFilter = new google.visualization.ControlWrapper({
+        'controlType': 'StringFilter',
+        'containerId': 'predictionControl',
+        'options': {
+            'filterColumnLabel': 'Type of Prediction',
+            'matchType': 'any',
+            'caseSensitive': false,
+            'ui': {'labelStacking': 'vertical'}
+        }
+    });
+    
+    var dataFilter = new google.visualization.ControlWrapper({
+        'controlType': 'StringFilter',
+        'containerId': 'dataControl',
+        'options': {
+            'filterColumnLabel': 'Data Integration',
+            'matchType': 'any',
+            'caseSensitive': false,
+            'ui': {'labelStacking': 'vertical'}
+        }
+    });
+    
+    var appFilter = new google.visualization.ControlWrapper({
+        'controlType': 'StringFilter',
+        'containerId': 'appControl',
+        'options': {
+            'filterColumnLabel': 'Application of Prediction',
+            'matchType': 'any',
+            'caseSensitive': false,
+            'ui': {'labelStacking': 'vertical'}
+        }
+    });
+    
+    var expFilter = new google.visualization.ControlWrapper({
+        'controlType': 'StringFilter',
+        'containerId': 'expControl',
+        'options': {
+            'filterColumnLabel': 'Experimental Validation',
+            'matchType': 'any',
+            'caseSensitive': false,
+            'ui': {'labelStacking': 'vertical'}
+        }
+    });
+    
+    var orgFilter = new google.visualization.ControlWrapper({
+        'controlType': 'StringFilter',
+        'containerId': 'orgControl',
+        'options': {
+            'filterColumnLabel': 'Organism',
+            'matchType': 'any',
+            'caseSensitive': false,
+            'ui': {'labelStacking': 'vertical'}
+        }
+    });
+    
+    var locationFilter = new google.visualization.ControlWrapper({
+        'controlType': 'StringFilter',
+        'containerId': 'locControl',
+        'options': {
+            'filterColumnLabel': 'Location',
             'matchType': 'any',
             'caseSensitive': false,
             'ui': {'labelStacking': 'vertical'}
@@ -124,7 +222,8 @@ function drawVisualization(json) {
 
     // Create the dashboard.
     var dash = new google.visualization.Dashboard(document.getElementById('dashboard'));
-    dash.bind([slider, stringFilter], [table, chart1]).draw(show_data);
+    dash.bind([yearSlider, citationSlider, authorFilter, titleFilter, journalFilter, predictionFilter, dataFilter, appFilter, expFilter, orgFilter, locationFilter], [table]).draw(show_data);
+    
 
     var set_widths = function ()  {
         // set the width of the column with the title "Name" to 100px
@@ -139,6 +238,8 @@ function drawVisualization(json) {
             google.visualization.events.addListener(table.getChart(), 'sort', set_widths);
         }
     });
+    
+    
 
     google.visualization.events.addListener(dash, 'ready', function () {
         console.log('dash ready');
