@@ -17,7 +17,7 @@ function drawMap(json) {
     window.map_data = new google.visualization.arrayToDataTable(json);
 
     window.map_options = {
-        'region': 'US',
+        'region': 'world',
         'displayMode': 'markers',
         'magnifyingGlass': {'enable': false},
 	'color': [0xFF8747, 0xFFB581, 0xc06000],
