@@ -156,7 +156,7 @@ function drawVisualization(json) {
     data.addRows(json.data);
     var show_data = new google.visualization.DataView(data);
     // for (var i=1, a=[]; i<=11; i++) a.push(i);
-    show_data.hideColumns([11, 12]);
+    show_data.hideColumns([11, 12, 13]);
 
     // Define a slider control for the 'Donuts eaten' column
     var yearSlider = new google.visualization.ControlWrapper({
@@ -169,15 +169,7 @@ function drawVisualization(json) {
         }
     });
 
-    var citationSlider = new google.visualization.ControlWrapper({
-        'controlType': 'NumberRangeFilter',
-        'containerId': 'citationControl',
-        'options': {
-            'filterColumnLabel': 'Total Citations',
-            'ui': {'labelStacking': 'vertical'}
-        }
-    });
-    window.redrawFilters = [yearSlider, citationSlider];
+    window.redrawFilters = [yearSlider];
 
 
     // Define a StringFilter control for the 'Name' column
@@ -326,7 +318,7 @@ function drawVisualization(json) {
 
     // Create the dashboard.
     var dash = new google.visualization.Dashboard(document.getElementById('dashboard'));
-    dash.bind([yearSlider, citationSlider, authorFilter, titleFilter, journalFilter,
+    dash.bind([yearSlider, authorFilter, titleFilter, journalFilter,
                predictionFilter, dataFilter, appFilter, expFilter, orgFilter, locationFilter],
               [table, chart1]).draw(show_data);
 
