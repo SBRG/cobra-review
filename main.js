@@ -169,7 +169,7 @@ function drawVisualization(json) {
         'containerId': 'yearControl',
         'options': {
             'filterColumnLabel': 'Year',
-            'ui': {'labelStacking': 'vertical'}
+            'ui': {'labelStacking': 'horizontal'}
         }
     });
 
@@ -183,7 +183,7 @@ function drawVisualization(json) {
             'filterColumnLabel': 'Authors',
             'matchType': 'any',
             'caseSensitive': false,
-            'ui': {'labelStacking': 'vertical'}
+            'ui': {'labelStacking': 'horizontal'}
         }
     });
 
@@ -194,7 +194,7 @@ function drawVisualization(json) {
             'filterColumnLabel': 'Title',
             'matchType': 'any',
             'caseSensitive': false,
-            'ui': {'labelStacking': 'vertical'}
+            'ui': {'labelStacking': 'horizontal'}
         }
     });
     
@@ -205,7 +205,7 @@ function drawVisualization(json) {
             'filterColumnLabel': 'Journal',
             'matchType': 'any',
             'caseSensitive': false,
-            'ui': {'labelStacking': 'vertical'}
+            'ui': {'labelStacking': 'horizontal'}
         }
     });
 
@@ -216,7 +216,7 @@ function drawVisualization(json) {
             'filterColumnLabel': 'Computational Prediction',
             'matchType': 'any',
             'caseSensitive': false,
-            'ui': {'labelStacking': 'vertical'}
+            'ui': {'labelStacking': 'horizontal'}
         }
     });
 
@@ -227,7 +227,7 @@ function drawVisualization(json) {
             'filterColumnLabel': 'High-throughput data integration',
             'matchType': 'any',
             'caseSensitive': false,
-            'ui': {'labelStacking': 'vertical'}
+            'ui': {'labelStacking': 'horizontal'}
         }
     });
 
@@ -238,7 +238,7 @@ function drawVisualization(json) {
             'filterColumnLabel': 'Prediction Application',
             'matchType': 'any',
             'caseSensitive': false,
-            'ui': {'labelStacking': 'vertical'}
+            'ui': {'labelStacking': 'horizontal'}
         }
     });
 
@@ -249,7 +249,7 @@ function drawVisualization(json) {
             'filterColumnLabel': 'Consistent with experiments',
             'matchType': 'any',
             'caseSensitive': false,
-            'ui': {'labelStacking': 'vertical'}
+            'ui': {'labelStacking': 'horizontal'}
         }
     });
 
@@ -260,7 +260,7 @@ function drawVisualization(json) {
             'filterColumnLabel': 'Organism',
             'matchType': 'any',
             'caseSensitive': false,
-            'ui': {'labelStacking': 'vertical'}
+            'ui': {'labelStacking': 'horizontal'}
         }
     });
 
@@ -271,7 +271,7 @@ function drawVisualization(json) {
             'filterColumnLabel': 'Location',
             'matchType': 'any',
             'caseSensitive': false,
-            'ui': {'labelStacking': 'vertical'}
+            'ui': {'labelStacking': 'horizontal'}
         }
     });
      
