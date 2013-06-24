@@ -95,7 +95,7 @@ function hideCharts() {
 $("#logout-button").button();
 
 function sizeTheCharts() {
-    var t =  Math.max($(window).height()*0.05, 180)
+    var t =  Math.max($(window).height()*0.05, 180);
     $("#charts").outerHeight(($(window).height() - t)*0.9);
     $("#charts").outerWidth($(window).width()*0.9);
     $("#charts").css('left', $(window).width()*0.05);
@@ -115,15 +115,18 @@ google.load('visualization', '1.1', {packages: ['controls', 'geochart', 'table']
 function loadJson() {
     $.getJSON("data.json", function(json) {
         drawVisualization(json);
-    });
+    })
+	.fail(function( jqxhr, textStatus, error ) {
+	    var err = textStatus + ', ' + error;
+	    console.log( "Request Failed: " + err);
+	});
     $.getJSON("map_statistics.json", function(json) {
         drawMap(json);
     });
 }
 
 function drawMap(json) {
-    // console.log('map data');
-    // console.log(json);
+    console.log('drawing map');
     window.map_data = new google.visualization.arrayToDataTable(json);
 
     window.map_options = {
@@ -143,8 +146,9 @@ function drawMap(json) {
 }
 
 function drawVisualization(json) {
+    console.log('drawing table');
     $("#table").height($(window).height()-$("#control1").height()-15);
-    sizeTheCharts()
+    sizeTheCharts();
 
     // Prepare the data
     var data = new google.visualization.DataTable();
@@ -156,7 +160,7 @@ function drawVisualization(json) {
     data.addRows(json.data);
     var show_data = new google.visualization.DataView(data);
     // for (var i=1, a=[]; i<=11; i++) a.push(i);
-    show_data.hideColumns([11, 12, 13]);
+    // show_data.hideColumns([11, 12, 13]);
 
     // Define a slider control for the 'Donuts eaten' column
     var yearSlider = new google.visualization.ControlWrapper({
@@ -170,7 +174,6 @@ function drawVisualization(json) {
     });
 
     window.redrawFilters = [yearSlider];
-
 
     // Define a StringFilter control for the 'Name' column
     var authorFilter = new google.visualization.ControlWrapper({
@@ -194,7 +197,7 @@ function drawVisualization(json) {
             'ui': {'labelStacking': 'vertical'}
         }
     });
-
+    
     var journalFilter = new google.visualization.ControlWrapper({
         'controlType': 'StringFilter',
         'containerId': 'journalControl',
@@ -271,7 +274,7 @@ function drawVisualization(json) {
             'ui': {'labelStacking': 'vertical'}
         }
     });
-
+     
     var cssClassNames = {
         'headerRow': '',// 'small-font blue-background',
         'tableRow': 'small-font',
@@ -328,7 +331,7 @@ function drawVisualization(json) {
         // set the width of the column with the title "Name" to 100px
         var title = "Authors";
         $('.google-visualization-table-th:contains(' + title + ')').css('width', '100px');
-    }
+    };
     google.visualization.events.addListener(table, 'ready', function () {
         console.log('table ready');
         set_widths();
@@ -345,7 +348,7 @@ function drawVisualization(json) {
             $(window).resize( $.debounce( 250, function() {
                 console.log('redrawing');
                 window.table.draw();
-            }))
+            }));
         }
     });
 }
