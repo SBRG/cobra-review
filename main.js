@@ -11,7 +11,7 @@ $("#filter-button").button({ disabled: false, icons: { primary: "ui-icon-circle-
 });
 $("#map-button").button({ disabled: false, icons: { primary: "ui-icon-circle-plus" } }).click(function (event) {
     event.preventDefault();
-    if ($('#map').css('visibility') == 'hidden') {
+    if ($('#map').css('display') == 'none') {
         hideLegend();
         hideCharts();
         showMap();
@@ -22,7 +22,7 @@ $("#map-button").button({ disabled: false, icons: { primary: "ui-icon-circle-plu
 });
 $("#terms-button").button({icons: { primary: "ui-icon-circle-plus" }}).click(function (event) {
     event.preventDefault();
-    if ($('#terms').css('visibility') == 'hidden') {
+    if ($('#terms').css('display') == 'none') {
         hideMap();
         hideCharts();
         showLegend();
@@ -32,7 +32,7 @@ $("#terms-button").button({icons: { primary: "ui-icon-circle-plus" }}).click(fun
 });
 $("#charts-button").button({icons: { primary: "ui-icon-circle-plus" }}).click(function (event) {
     event.preventDefault();
-    if ($('#charts').css('visibility') == 'hidden') {
+    if ($('#charts').css('display') == 'none') {
         hideMap();
         hideLegend();
         showCharts();
@@ -44,69 +44,72 @@ $("#charts-button").button({icons: { primary: "ui-icon-circle-plus" }}).click(fu
 
 function showMap() {
     $('#map-button').button( "option", "icons", { primary: "ui-icon-circle-minus" });
-    $('#map').css('visibility','visible');
     $('#map').css('z-index','50');
-    $("#map").outerHeight($(window).height()*0.9);
-    $("#map").outerWidth($(window).width()*0.9);
-    $("#map").css('left', $(window).width()*0.05);
-    $("#map").css('top', Math.max($(window).height()*0.05, 70));
+    $('#map').fadeIn('fast');
+    var t = 70;
+    $("#map").outerHeight($(window).height() - t - 20);
+    $("#map").outerWidth($(window).width() - 20);
+    $("#map").css('left', 10);
+    $("#map").css('top', t);
     drawTheMap();
 }
 function hideMap() {
     $('#map-button').button( "option", "icons", { primary: "ui-icon-circle-plus" });
-    $('#map').css('visibility','hidden');
+    $('#map').fadeOut('fast');
 }
 function showLegend() {
     $('#terms-button').button( "option", "icons", { primary: "ui-icon-circle-minus" });
-    $('#terms').css('visibility','visible');
     $('#terms').css('z-index','50');
-    $("#terms").outerHeight($(window).height()*0.9);
-    $("#terms").outerWidth($(window).width()*0.9);
-    $("#terms").css('left', $(window).width()*0.05);
-    $("#terms").css('top', Math.max($(window).height()*0.05, 70));
+    $('#terms').fadeIn('fast');
+    var t = 70;
+    $("#terms").outerHeight($(window).height() - t - 20);
+    $("#terms").outerWidth($(window).width() - 20);
+    $("#terms").css('left', 10);
+    $("#terms").css('top', t);
 }
 function hideLegend() {
     $('#terms-button').button( "option", "icons", { primary: "ui-icon-circle-plus" });
-    $('#terms').css('visibility','hidden');
+    $('#terms').fadeOut('fast');
 }
 function showFilterOptions() {
     $('#filter-button').button( "option", "icons", { primary: "ui-icon-circle-minus" });
-    $("#panel").slideDown("slow", function() {
+    $("#panel").slideDown("fast", function() {
 	for (var i=0; i<window.redrawFilters.length; i++) {
 	    window.redrawFilters[i].draw();
 	}
     });
+    if ($('#terms').css('display')=='block') hideLegend();
+    if ($('#map').css('display')=='block') hideMap();
 }
 function hideFilterOptions() {
     $('#filter-button').button( "option", "icons", { primary: "ui-icon-circle-plus" });
-    $("#panel").slideUp("slow");
+    $("#panel").slideUp("fast");
+    if ($('#charts').css('display')=='block') hideCharts();
 }
 function showCharts() {
     $('#charts-button').button( "option", "icons", { primary: "ui-icon-circle-minus" });
-    $('#charts').css('visibility','visible');
     $('#charts').css('z-index','50');
     sizeTheCharts();
+    $('#charts').fadeIn('fast');
 }
 function hideCharts() {
     $('#charts-button').button( "option", "icons", { primary: "ui-icon-circle-plus" });
-    $('#charts').css('visibility','hidden');
+    $('#charts').fadeOut('fast');
 }
 
 $("#logout-button").button();
 
 function sizeTheCharts() {
-    var t =  Math.max($(window).height()*0.05, 180);
-    $("#charts").outerHeight(($(window).height() - t)*0.9);
-    $("#charts").outerWidth($(window).width()*0.9);
-    $("#charts").css('left', $(window).width()*0.05);
+    var t = 190;
+    $("#charts").outerHeight($(window).height() - t - 20);
+    $("#charts").outerWidth($(window).width() - 20);
+    $("#charts").css('left', 10);
     $("#charts").css('top', t);
 }
 
 function drawTheMap() {
     window.map.draw(window.map_data, window.map_options);
 }
-
-
 
 // load Google visualization packages
 google.load('visualization', '1.1', {packages: ['controls', 'geochart', 'table']});
@@ -348,6 +351,9 @@ function drawVisualization(json) {
             $(window).resize( $.debounce( 250, function() {
                 console.log('redrawing');
                 window.table.draw();
+		if ($('#charts').css('display')=='block') {
+		    sizeTheCharts();
+		}
             }));
         }
     });
