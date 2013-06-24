@@ -8,31 +8,52 @@
       .small-font { font-size: 8pt }
       .blue-background { background-color: rgb(140, 140, 255) }
       .popup {
-	  border: 2px solid grey;
-	  background-color:rgb(255,255,255); 
-	  position:absolute; 
-	  -webkit-border-radius: 5px;
-	  -moz-border-radius: 5px;
-	  border-radius: 5px;
+      border: 2px solid grey;
+      background-color:rgb(255,255,255);
+      position:absolute;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
       }
-      
-      #panel
-        {
-        padding:0px;
-        background-color:#E5CCFF;
-        border:solid 1px #c3c3c3;
-        }
-    </style>
-    <!-- <link rel="stylesheet" href="style.css" type="text/css" /> -->
 
+      #panel
+      {
+      padding:0px;
+      background-color:rgb(228, 233, 245);
+      border:solid 2px grey;
+      }
+
+      .center {
+      margin:0px auto;
+      }
+
+      .control {
+      width: 400px;
+      height: 30px;
+      float: right;
+      }
+      .wider {
+      width: 1200px;
+      }
+
+      .row {
+      style=height:50%;
+      float:left;
+      }
+      .google-visualization-controls-stringfilter { height: 100% }
+      .google-visualization-controls-label { width: 400px; position: absolute; right: 210px; text-align:right }
+      .google-visualization-controls-rangefilter .google-visualization-controls-label { right: 300px; padding: 0.3em 0 0 0;}
+      .goog-inline-block { float:right; margin-top: 4px; margin-right: 80px }
+      .google-visualization-controls-rangefilter .goog-inline-block { margin-top: 4px; margin-right: 0 }
+
+    </style>
 
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.min.js" type="text/javascript"></script>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
     <script src="jquery.ba-throttle-debounce.min.js" type="text/javascript"></script>
-    
-    
+
   </head>
   <body style="font-family: Helvetica; border: 0 none;">
     <div id="map" class="popup" style="visibility:hidden; padding: 5px;"></div>
@@ -74,35 +95,41 @@
     </div>
 
     <div id="charts" class="popup" style="visibility:hidden; padding:10px;">
-      <div id="chart1" style="float:left; width:90%; left:5%; height:100%;"></div>      
+      <div id="chart1" style="float:left; width:90%; left:5%; height:100%;"></div>
       <!-- <div id="chart2" style="float:right; width:40%; right:5%"></div> -->
     </div>
-     
+
     <div id="dashboard" style="margin: 0px auto; width: 100%">
-     <div id="buttons" style="float: right; margin: 0px auto; width: 100%; height: 50px;">
+      <div id="buttons" style="float: right; margin: 0px auto; width: 100%; height: 50px;">
         <a id="logout-button" href="http://zak.ucsd.edu/logout" style="float: right; margin-left:20px;">Log out</a>
         <a id="map-button" style="float: right;">map</a>
         <a id="terms-button" style="float: right;">legend</a>
         <a id="charts-button" style="float: right;">charts</a>
         <a id="filter-button" style="float: right; margin-right:20px;">filter</a>
       </div>
-      <div id="panel" style="float: left; margin: 0px auto; width: 100%;display:none;">
-        <div id="filters" style="width:88%; margin:0px auto;">
-          <div id="authorControl" style="width: 200px;height: 60px; float: left;">LOADING...</div>
-          <div id="titleControl" style="width: 200px;height: 60px; float: left;"></div>
-          <div id="journalControl" style="width: 200px;height: 60px; float: left;"></div>
-          <div id="predictionControl" style="width: 200px;height: 60px; float: left;"></div>
-          <div id="dataControl" style="width: 200px;height: 60px; float: left;"></div>
-          <div id="appControl" style="width: 200px;height: 60px; float: left;"></div>
-          <div id="expControl" style="width: 200px;height: 60px; float: left;"></div>
-          <div id="orgControl" style="width: 200px;height: 60px; float: left;"></div>
-          <div id="locControl" style="width: 200px;height: 60px; float: left;"></div>
-        </div>
-        <div id="sliders" style=" margin: 0px auto; width: 30%">
-          <div id="yearControl" style="width: 300px;height: 60px; float: left;"></div>
+      <div id="panel" style="float: left; margin: 0px auto; width: 100%; display:none;">
+        <div id="filters" class="center" style="width:1200px;">
+          <!-- <div class="row"> -->
+	  <div class="control wider">
+            <div id="yearControl" class="center" style="width:320px"></div>
+	  </div>
+          <div id="authorControl" class="control">LOADING...</div>
+          <div id="journalControl" class="control"></div>
+          <div id="titleControl" class="control"></div>
+          <!-- </div> -->
+          <!-- <div class="row"> -->
+          <div id="predictionControl" class="control"></div>
+          <div id="dataControl" class="control"></div>
+          <!-- </div> -->
+          <!-- <div class="row"> -->
+          <div id="locControl" class="control"></div>
+          <div id="appControl" class="control"></div>
+          <div id="expControl" class="control"></div>
+          <div id="orgControl" class="control"></div>
+          <!-- </div> -->
         </div>
       </div>
-     
+
       <div id="table" style="width:100%; height:100%; float: left;"></div>
     </div>
 
