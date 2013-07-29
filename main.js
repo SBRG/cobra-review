@@ -161,9 +161,16 @@ function drawVisualization(json) {
     }
 
     data.addRows(json.data);
+
+    // highlight "Great papers"
+    for (var i=0; i<data.getNumberOfRows(); ++i) {
+	for (var j=0; j<data.getNumberOfColumns(); ++j) {
+	    if (json.data[i][0] != "") data.setProperty(i, j, 'style', 'background:rgb(248, 218, 185);');
+	}
+    }
+
     var show_data = new google.visualization.DataView(data);
-    // for (var i=1, a=[]; i<=11; i++) a.push(i);
-    // show_data.hideColumns([11, 12, 13]);
+    show_data.hideColumns([0]);	// hide "Great papers" column
 
     // Define a slider control for the 'Donuts eaten' column
     var yearSlider = new google.visualization.ControlWrapper({
@@ -279,11 +286,11 @@ function drawVisualization(json) {
     });
      
     var cssClassNames = {
-        'headerRow': '',// 'small-font blue-background',
+        'headerRow': 'medium-font',// 'small-font blue-background',
         'tableRow': 'small-font',
         'oddTableRow': 'small-font',
-        'selectedTableRow': '',
-        'hoverTableRow': '',
+        'selectedTableRow': 'white-background',
+        'hoverTableRow': 'white-background',
         'headerCell': '',
         'tableCell': '',
         'rowNumberCell': ''
@@ -295,9 +302,9 @@ function drawVisualization(json) {
         'containerId': 'table',
         'options': {
             'showRowNumber': true,
-            'alternatingRowStyle': true,
+            'alternatingRowStyle': false,
             'page': 'enable',
-            'pageSize': 50,
+            'pageSize': 650,
             'cssClassNames': cssClassNames,
             'allowHtml': true
         }
@@ -331,9 +338,9 @@ function drawVisualization(json) {
 
     // Set up resize listeners
     var set_widths = function ()  {
-        // set the width of the column with the title "Name" to 100px
+        // set the width of the width of column with the title "Name"
         var title = "Authors";
-        $('.google-visualization-table-th:contains(' + title + ')').css('width', '100px');
+        $('.google-visualization-table-th:contains(' + title + ')').css('width', '150px');
     };
     google.visualization.events.addListener(table, 'ready', function () {
         console.log('table ready');

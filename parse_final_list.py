@@ -49,10 +49,10 @@ def dump_spreadsheet(papers):
 
     header = []; cols = [] 
 
-    cols_in_order = ["Authors", "Title", "Journal", "Year", "PMID",
+    cols_in_order = ["Great papers", "Authors", "Title", "Journal", "Year", "PMID",
                    "Computational Prediction", "High-throughput data integration",
                    "Prediction Application", "Consistent with experiments", "Organism",
-                   "Location", "Great papers", "Short Description",  "Total Citations"]
+                   "Location", "Short Description"]
     number_cols = ["Year", "Total Citations"]
     for a in cols_in_order:
         if a not in papers.columns:
@@ -76,7 +76,16 @@ def dump_spreadsheet(papers):
         for word in word_list:
             final.append(word.title() if len(word)>=min_length else word)
         return " ".join(final)
-    papers['Authors'] = papers['Authors'].map(lambda x: title_except(x))
+    def et_al(s, max_authors=4):
+        author_list = re.split(';', s)
+        if len(author_list) > max_authors:
+            author_list = author_list[0:max_authors-1]
+            r = ";<br/>".join(author_list) 
+            r += '; <i>et al.</i>'
+        else:
+            r = ";<br/>".join(author_list) 
+        return r
+    papers['Authors'] = papers['Authors'].map(lambda x: et_al(title_except(x)))
             
     with open(out_file,'w') as file:
         json.dump({'header':header,
