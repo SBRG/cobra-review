@@ -89,10 +89,13 @@ def dump_spreadsheet(papers):
             r = ";<br/>".join(author_list) 
         return r
     papers['Authors'] = papers['Authors'].map(lambda x: et_al(title_except(x)))
-            
+
+    # sort by year
+    data = list(papers[cols].itertuples(index=False))
+    data.sort(key = lambda c: c[4])
     with open(out_file,'w') as file:
         json.dump({'header':header,
-                   'data': list(papers[cols].itertuples(index=False))},
+                   'data': data},
                    file,
                    allow_nan=False) 
 
