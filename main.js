@@ -1,7 +1,7 @@
 
 // Set up buttons
 
-$("#filter-button").button({ disabled: false, icons: { primary: "ui-icon-circle-plus" } }).click(function (event) {
+$("#filter-button").button({ disabled: false, icons: { primary: "ui-icon-circle-minus" } }).click(function (event) {
     if ($('#panel').css('display') == 'none') {
         event.preventDefault();
         showFilterOptions();
@@ -73,11 +73,7 @@ function hideLegend() {
 }
 function showFilterOptions() {
     $('#filter-button').button( "option", "icons", { primary: "ui-icon-circle-minus" });
-    $("#panel").slideDown("fast", function() {
-	for (var i=0; i<window.redrawFilters.length; i++) {
-	    window.redrawFilters[i].draw();
-	}
-    });
+    $("#panel").slideDown("fast");
     if ($('#terms').css('display')=='block') hideLegend();
     if ($('#map').css('display')=='block') hideMap();
 }
@@ -182,8 +178,6 @@ function drawVisualization(json) {
             'ui': {'labelStacking': 'horizontal'}
         }
     });
-
-    window.redrawFilters = [yearSlider];
 
     // Define a StringFilter control for the 'Name' column
     var authorFilter = new google.visualization.ControlWrapper({
@@ -353,14 +347,18 @@ function drawVisualization(json) {
 
     google.visualization.events.addListener(dash, 'ready', function () {
         console.log('dash ready');
+	$('#loading').hide();
         if (!window.added_listener) {
             window.added_listener = true;
             $(window).resize( $.debounce( 250, function() {
-                console.log('redrawing');
-                window.table.draw();
-		if ($('#charts').css('display')=='block') {
-		    sizeTheCharts();
-		}
+		console.log('redrawing'); 
+		$('#loading').show();
+                window.setTimeout(function() { 
+                    window.table.draw();
+		    if ($('#charts').css('display')=='block') {
+			sizeTheCharts();
+		    }
+		}, 10);
             }));
         }
     });
