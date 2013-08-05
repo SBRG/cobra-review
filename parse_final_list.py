@@ -69,7 +69,10 @@ def dump_spreadsheet(papers):
     # fix case
     papers['Journal'] = papers['Journal'].map(lambda x: x.title())
     papers['Title'] = papers['Title'].map(lambda x: transform_sentence_case([x])[0])
-
+    papers['Short Description'] = [description if great!="" else ""
+                                   for (description, great)
+                                   in zip(papers['Short Description'], papers['Great papers'])]
+        
     def title_except(s, min_length=4):
         word_list = re.split(' ', s)
         final = []
