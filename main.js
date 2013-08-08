@@ -93,8 +93,6 @@ function hideCharts() {
     $('#charts').fadeOut('fast');
 }
 
-$("#logout-button").button();
-
 function sizeTheCharts() {
     var t = 190;
     $("#charts").outerHeight($(window).height() - t - 20);
