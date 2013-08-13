@@ -157,7 +157,6 @@ var load_review = function(number_of_results) {
 
     function drawVisualization(json) {
         console.log('drawing table');
-        sizeTheCharts();
 
         // Prepare the data
         var data = new google.visualization.DataTable();
@@ -318,6 +317,10 @@ var load_review = function(number_of_results) {
         window.added_listener = false;
         window.added_width_listener = false;
 
+	$("#charts").show(); 
+	sizeTheCharts();
+	var first = true;
+
         var chart1 = new google.visualization.ChartWrapper({
             'chartType': 'PieChart',
             'containerId': 'chart1',
@@ -339,7 +342,6 @@ var load_review = function(number_of_results) {
         dash.bind([yearSlider, authorFilter, titleFilter, journalFilter,
                    predictionFilter, dataFilter, appFilter, expFilter, orgFilter, locationFilter],
                   [table, chart1]).draw(show_data);
-
 
         // Set up resize listeners
         var set_widths = function ()  {
@@ -365,6 +367,10 @@ var load_review = function(number_of_results) {
         google.visualization.events.addListener(dash, 'ready', function () {
             console.log('dash ready');
             $('#loading').hide();
+	    if (first) {	//hide the charts after the first load
+		$("#charts").hide();
+		first = false;
+	    }
 	    // better scrollbar management
 	    if (number_of_results == 1000) {
 		$("#table").height('100%');
