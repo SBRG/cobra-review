@@ -62,6 +62,7 @@
       .google-visualization-controls-label { width: 400px; position: absolute; right: 210px; text-align:right }
       .google-visualization-controls-rangefilter .google-visualization-controls-label { right: 300px; padding: 0.3em 0 0 0;}
       .goog-inline-block { float:right; margin-top: 4px; margin-right: 80px }
+      .goog-inline-block input { width: 117px; }
       .google-visualization-controls-rangefilter .goog-inline-block { margin-top: 4px; margin-right: 0 }
 
     </style>
@@ -112,9 +113,8 @@
       <div style="background:rgb(248, 218, 185); padding: 3px;">Note: Key papers are highlighted.</div>
     </div>
 
-    <div id="charts" class="popup" style="display:none; padding:10px;">
+    <div id="charts" class="popup" style="display:none; padding:10px; overflow: hidden">
       <div id="chart1" style="float:left; width:90%; left:5%; height:100%;"></div>
-      <!-- <div id="chart2" style="float:right; width:40%; right:5%"></div> -->
     </div>
 
     <div id="slow" style="float:left">
@@ -125,7 +125,7 @@
       <div id="buttons" style="float: right; margin: 0px auto; height: 50px;">
         <a id="map-button" style="float: right;">map</a>
         <a id="terms-button" style="float: right;">legend</a>
-        <a id="charts-button" style="float: right;">charts</a>
+        <a id="charts-button" style="float: right;">organism chart</a>
         <a id="filter-button" style="float: right; margin-right:20px;">filter</a>
       </div>
       <div id="panel" style="float: left; margin: 0px auto; width: 100%; min-width:1800px; display:block;">
