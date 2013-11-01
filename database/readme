@@ -5,7 +5,7 @@ There are three functions in the database module:
 Takes a modelversion_id as the argument and builds a cobra model object.
 It also outputs an sbml file of the model.
 
-2. smbltodatabase(file, description=False, modelversion_id=False):  
+2. todatabase(file, description=False, modelversion_id=False):  
 
 Takes an sbml file as input, builds a cobra model and stores the model data
 in the grmit database. It returns the value of the modelversion_id. 
