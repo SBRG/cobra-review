@@ -9,7 +9,7 @@ import time
 
 
 def databasetomodel(modelversion_id, modelname=False):
-    #1. takes a model and builds a cobra model object.
+    #1. takes a modelid and builds a cobra model object.
     #2. requires modelversion_id as an argument and optionally a model name
 
     config = {}
