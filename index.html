@@ -75,47 +75,6 @@
 
   </head>
   <body style="font-family: Helvetica; border: 0 none;">
-    <div id="map" class="popup" style="display:none; padding: 5px;"></div>
-    <div id="terms" class="popup" style="display: none; padding:30px 5%; overflow:scroll;">
-      <h3>Definitions of Terms:</h3>
-
-      Computational Prediction – Type of constraint-based modeling prediction used:
-      <ul>
-        <li>Flux Phenotype – Calculation of metabolic fluxes, nutrient uptake, or growth rate</li>
-        <li>Essentiality (Global) – Untargeted screen of knockouts</li>
-        <li>Knockout (KO, Targeted) – Targeted growth of select mutants or rational selection of knockouts</li>
-        <li>Thermodynamics – Modeling incorporates or makes predictions on thermodynamics of reactions </li>
-        <li>Objective function – Modeling and analysis to determine objective function</li>
-        <li>System-scale property – Determines global property of metabolic network</li>
-        <li>Metabolite phenotype – Modeling and analysis for determining properties of metabolites in network</li>
-        <li>Macromolecular interaction phenotype – Integrates interaction networks (e.g. transcriptional regulation, genetic interactions) or uses metabolic network to analyze such networks</li>
-        <li>Synthetic biology – Incorporates novel pathways into metabolism</li>
-        <li>Biological discovery – Uses model to extend or refine biochemical knowledge</li>
-        <li>Experimental Design (ExpDes) – Modeling analysis is used to design new experiments</li>
-        <li>Pathway Analysis – Utilizes Extreme Pathways or Elementary Flux Modes and their derivatives</li>
-        <li>Other Phenotype – miscellaneous</li>
-      </ul>
-      High-throughput data integration – Type of high-throughput data integrated with modeling for predictions<br/><br/>
-      Prediction Application – General field that predictions are used for:
-      <ul>
-        <li>General biological sciences – </li>
-        <li>Met Eng – metabolic engineering</li>
-        <li>Inf – infectious disease</li>
-        <li>Env – environmental</li>
-        <li>Biomed – biomedical sciences</li>
-      </ul>
-      Consistent with experiments – computational predictions are compared to experimental data:
-      <ul>
-        <li>Legacy data – consistent with experiments in previous publications</li>
-        <li>Prospective experimental validation – experiments are performed in the publication</li>
-      </ul>
-
-      <div style="background:rgb(248, 218, 185); padding: 3px;">Note: Key papers are highlighted.</div>
-    </div>
-
-    <div id="charts" class="popup" style="display:none; padding:10px; overflow: hidden">
-      <div id="chart1" style="float:left; width:90%; left:5%; height:100%;"></div>
-    </div>
 
     <div id="slow" style="float:left">
       Loading slowly? Try with only <a href="index-20.html">20 results per page</a>.
@@ -123,9 +82,6 @@
 
     <div id="dashboard" style="margin: 0px auto; width: 100%">
       <div id="buttons" style="float: right; margin: 0px auto; height: 50px;">
-        <a id="map-button" style="float: right;">map</a>
-        <a id="terms-button" style="float: right;">legend</a>
-        <a id="charts-button" style="float: right;">organism chart</a>
         <a id="filter-button" style="float: right; margin-right:20px;">filter</a>
       </div>
       <div id="panel" style="float: left; margin: 0px auto; width: 100%; min-width:1800px; display:block;">
@@ -136,12 +92,7 @@
           <div id="authorControl" class="control"></div>
           <div id="journalControl" class="control"></div>
           <div id="titleControl" class="control"></div>
-          <div id="predictionControl" class="control"></div>
-          <div id="dataControl" class="control"></div>
-          <div id="locControl" class="control"></div>
-          <div id="appControl" class="control"></div>
-          <div id="expControl" class="control"></div>
-          <div id="orgControl" class="control"></div>
+          <div id="keywordControl" class="control"></div>
         </div>
       </div>
 
