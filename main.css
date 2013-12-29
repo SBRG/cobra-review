@@ -94,7 +94,6 @@ body {
     width: 1200px;
 }
 
-.row {
-    style=height:50%;
-    float:left;
+.great {
+    background-color: #F8DAB9;
 }
