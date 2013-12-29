@@ -40,6 +40,10 @@ $("#terms-button").button({icons: { primary: "ui-icon-circle-plus" }}).click(fun
 //     }
 // });
 
+// load Google visualization packages
+google.load('visualization', '1.1', {packages: ['geochart']});
+google.setOnLoadCallback(loadMapJson);
+
 // load the map and table
 loadJson();
 
@@ -53,7 +57,7 @@ function showMap() {
     $("#map").outerWidth($(window).width() - 20);
     $("#map").css('left', 10);
     $("#map").css('top', t);
-    // drawTheMap();
+    redrawMap();
 }
 function hideMap() {
     $('#map-button').button( "option", "icons", { primary: "ui-icon-circle-plus" });
@@ -108,6 +112,39 @@ function sizeTheCharts() {
     $("#charts").css('top', t);
 }
 
+// draw map
+function loadMapJson() {
+    $.getJSON("map_statistics.json", drawMap);
+}
+function drawMap(json, error) {
+    console.log('drawing map');
+    window.map_data = new google.visualization.arrayToDataTable(json);
+
+    window.map_options = {
+        'region': 'world',
+        'displayMode': 'markers',
+        'magnifyingGlass': {'enable': false},
+        'color': [0xFF8747, 0xFFB581, 0xc06000],
+        'markerOpacity': 1.0,
+        'backgroundColor': '#FFFFFF',
+        'datalessRegionColor': '#E5E5E5',
+        'colorAxis': { 'colors': ['#6BAED6','#08519C']},
+        'sizeAxis':  {'minSize': 5,  'maxSize': 10}
+        // 'resolution'
+    };
+
+    window.map = new google.visualization.GeoChart(document.getElementById('map'));
+
+    google.visualization.events.addListener(window.map, 'ready', function () {
+	console.log('map ready');
+	$('#loading').hide();
+    });
+    $('#loading').hide();
+}
+function redrawMap() {
+    window.map.draw(window.map_data, window.map_options);
+}
+
 // load the json
 function loadJson() {
     console.log('loading data');
@@ -118,15 +155,7 @@ function loadJson() {
             var err = textStatus + ', ' + error;
             console.log( "Request Failed: " + err);
         });
-    $.getJSON("map_statistics.json", function(json) {
-        drawMap(json);
-    });
 }
-
-function drawMap(json) {
-    $('#loading').hide();
-}
-
 function drawVisualization(json) {
     console.log('drawing table');
 
@@ -150,8 +179,6 @@ function drawVisualization(json) {
 	min_year = year < min_year ? year : min_year;
 	max_year = year > max_year ? year : max_year;
     });
-
-    console.log(columns);
 
     // Custom filtering function which will filter data in column four between
     // two values
