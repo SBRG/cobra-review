@@ -27,7 +27,7 @@ body {
 
 #dashboard {
     margin: 0px auto;
-    width: 96%;
+    width: 98%;
 }
 
 .small-font { font-size: 8pt }
@@ -94,6 +94,13 @@ body {
     width: 1200px;
 }
 
-.great {
-    background-color: #F8DAB9;
+.great.odd {
+    background-color: #F8DAB9 !important;
+}
+.great.even {
+    background-color: #F5E6D6 !important;
+}
+
+.dataTable {
+    font-size: 13px;
 }

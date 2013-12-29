@@ -130,6 +130,7 @@ function drawMap(json) {
 function drawVisualization(json) {
     console.log('drawing table');
 
+    // go through data
     var columns = json.header,
 	data = json.data,
 	count = 0,
@@ -139,7 +140,8 @@ function drawVisualization(json) {
     columns.map(function(c) {
 	c.sTitle = c.name;
 	c.bVisible = !(c.name == 'Great papers');
-	if (c.name=='Authors') c.sWidth = '500px';
+	if (c.name == 'Short Description') c.sWidth = '450px';
+	// if (count < 6) c.bVisible = false;
 	col_object[c.name] = count;
 	count++;
     });
@@ -148,6 +150,8 @@ function drawVisualization(json) {
 	min_year = year < min_year ? year : min_year;
 	max_year = year > max_year ? year : max_year;
     });
+
+    console.log(columns);
 
     // Custom filtering function which will filter data in column four between
     // two values
@@ -164,20 +168,25 @@ function drawVisualization(json) {
 	"aaData": data, 
 	"aoColumns": columns,
 	"sScrollX": "100%",
+	"sScrollXInner": "2000px",
 	"bScrollCollapse": true,
+        "bAutoWidth": false,
 	"bPaginate": false,
+	"bSortClasses": false,
 	"sDom": '<"#panel"if>t',
 	"aaSorting": [[col_object['Year'], 'asc'],
 		      [col_object['Authors'], 'asc']],
 	"fnRowCallback": function( nRow, aData, iDisplayIndex ) {
-	    nRow.className = aData[col_object['Great papers']] == "" ? "not-great" : "great";
+	    nRow.className = aData[col_object['Great papers']] == "" ? 
+		nRow.className : 
+		nRow.className + " great";
 	}
     });
 
     // Add the filter    
     $('<div id="year-slider"></div>').appendTo('#panel').slider({
 	range: true,
-	min: min_year,		//TODO get max and min
+	min: min_year,
 	max: max_year,
 	values: [min_year, max_year],
 	slide: function( event, ui ) {
