@@ -1,6 +1,7 @@
 body {
     font-family: Helvetica; 
     border: 0 none;
+    overflow-x: hidden;
 }
 
 #map {
@@ -48,10 +49,7 @@ body {
     padding:8px 10px 4px 10px;
     background-color:rgb(228, 233, 245);
     border:solid 1px grey;
-    float: left;
-    margin: 0px auto;
-    width: 100%; 
-    display:block;
+    height: 22px;
 }
 
 #loading {
@@ -73,12 +71,16 @@ body {
 #year-slider {
     width: 200px;
     float: right;
-    margin-right: 30px;
+    margin-right: 40px;
+    margin-left: 10px;
 }
 
-#year-text {
+.right {
     float: right;
-    margin-right: 30px;
+    margin-right: 15px;
+ }
+#year-text {
+    color: #685C5C;
 }
 
 .center {
@@ -89,9 +91,6 @@ body {
     width: 400px;
     height: 30px;
     float: right;
-}
-.wider {
-    width: 1200px;
 }
 
 .great.odd {
@@ -104,3 +103,5 @@ body {
 .dataTable {
     font-size: 13px;
 }
+
+
