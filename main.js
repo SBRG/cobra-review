@@ -28,17 +28,17 @@ $("#terms-button").button({icons: { primary: "ui-icon-circle-plus" }}).click(fun
         hideLegend();
     }
 });
-$("#charts-button").button({icons: { primary: "ui-icon-circle-plus" }}).click(function (event) {
-    event.preventDefault();
-    if ($('#charts').css('display') == 'none') {
-        hideMap();
-        hideLegend();
-        showCharts();
-        showFilterOptions();
-    } else {
-        hideCharts();
-    }
-});
+// $("#charts-button").button({icons: { primary: "ui-icon-circle-plus" }}).click(function (event) {
+//     event.preventDefault();
+//     if ($('#charts').css('display') == 'none') {
+//         hideMap();
+//         hideLegend();
+//         showCharts();
+//         showFilterOptions();
+//     } else {
+//         hideCharts();
+//     }
+// });
 
 // load the map and table
 loadJson();
@@ -169,7 +169,6 @@ function drawVisualization(json) {
 	"aoColumns": columns,
 	"sScrollX": "100%",
 	"sScrollXInner": "2000px",
-	"bScrollCollapse": true,
         "bAutoWidth": false,
 	"bPaginate": false,
 	"bSortClasses": false,
@@ -197,12 +196,13 @@ function drawVisualization(json) {
 	}
     });
 
-    $('<label id="year-text"></label>').appendTo('#panel')
+    $('<label class="right" id="year-text"></label>').appendTo('#panel')
 	.text($( "#year-slider" ).slider( "values", 0 ) + " - " + $( "#year-slider" ).slider( "values", 1 ));
+    $('<label class="right">Year: </label>').appendTo('#panel');
 
     table.fnDraw();		// TODO fix this; it's redundant
 
     // hide the filters && loading div
-    hideFilterOptions();
+    // hideFilterOptions();
     $('#loading').hide();
 }
