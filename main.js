@@ -10,7 +10,7 @@ $("#filter-button").button({ disabled: false, icons: { primary: "ui-icon-circle-
 $("#map-button").button({ disabled: false, icons: { primary: "ui-icon-circle-plus" } }).click(function (event) {
     event.preventDefault();
     if ($('#map').css('display') == 'none') {
-	$('#loading').show();
+	// $('#loading').show();
         hideLegend();
         hideCharts();
         showMap();
@@ -41,7 +41,6 @@ $("#charts-button").button({icons: { primary: "ui-icon-circle-plus" }}).click(fu
 });
 
 // load the map and table
-hideFilterOptions();
 loadJson();
 
 // definitions
@@ -54,7 +53,7 @@ function showMap() {
     $("#map").outerWidth($(window).width() - 20);
     $("#map").css('left', 10);
     $("#map").css('top', t);
-    drawTheMap();
+    // drawTheMap();
 }
 function hideMap() {
     $('#map-button').button( "option", "icons", { primary: "ui-icon-circle-plus" });
@@ -108,9 +107,6 @@ function sizeTheCharts() {
     $("#charts").css('left', 10);
     $("#charts").css('top', t);
 }
-function drawTheMap() {
-    window.map.draw(window.map_data, window.map_options);
-}
 
 // load the json
 function loadJson() {
@@ -128,32 +124,69 @@ function loadJson() {
 }
 
 function drawMap(json) {
+    $('#loading').hide();
 }
 
 function drawVisualization(json) {
     console.log('drawing table');
 
     var columns = json.header,
-	data = json.data;
-	// count = 0,
-	// col_object = {};
+	data = json.data,
+	count = 0,
+	col_object = {},
+	min_year = 3000,
+	max_year = 0;
     columns.map(function(c) {
 	c.sTitle = c.name;
 	c.bVisible = !(c.name == 'Great papers');
-	// if (c.name=='Authors') c.sWidth = '500px';
-	// col_object[c.name] = count;
-	// count++;
+	if (c.name=='Authors') c.sWidth = '500px';
+	col_object[c.name] = count;
+	count++;
     });
-    // data.map(function(d) {
-    // });
-    console.log(columns);
+    data.map(function(d) {
+	var year = d[col_object['Year']]; 
+	min_year = year < min_year ? year : min_year;
+	max_year = year > max_year ? year : max_year;
+    });
 
-    $('#table').dataTable({"aaData": data, 
-			   "aoColumns": columns,
-			   "sScrollX": "100%",
-			   "sScrollY": "100%",
-			   "bScrollCollapse": true,
-			   "bPaginate": false});
+    // Custom filtering function which will filter data in column four between
+    // two values
+    $.fn.dataTableExt.afnFiltering.push(
+	function( oSettings, aData, iDataIndex ) {
+            var min = parseInt($("#year-slider").slider("values", 0)),
+		max = parseInt($("#year-slider").slider("values", 1)),
+		val = parseInt(aData[col_object['Year']]);
+            return (min <= val && val <= max);
+	}
+    );
+    
+    var table = $('#table').dataTable({"aaData": data, 
+				       "aoColumns": columns,
+				       "sScrollX": "100%",
+				       "bScrollCollapse": true,
+				       "bPaginate": false,
+				       "sDom": '<"#panel"if>t'});
 
+    // Add the filter    
+    $('<div id="year-slider"></div>').appendTo('#panel').slider({
+	range: true,
+	min: min_year,		//TODO get max and min
+	max: max_year,
+	values: [min_year, max_year],
+	slide: function( event, ui ) {
+            $( "#year-text" ).text(ui.values[ 0 ] + " - " + ui.values[ 1 ]);
+	},
+	change: function( event, ui ) {
+	    table.fnDraw();
+	}
+    });
+
+    $('<label id="year-text"></label>').appendTo('#panel')
+	.text($( "#year-slider" ).slider( "values", 0 ) + " - " + $( "#year-slider" ).slider( "values", 1 ));
+
+    table.fnDraw();		// TODO fix this; it's redundant
+
+    // hide the filters && loading div
+    hideFilterOptions();
     $('#loading').hide();
 }
