@@ -160,12 +160,19 @@ function drawVisualization(json) {
 	}
     );
     
-    var table = $('#table').dataTable({"aaData": data, 
-				       "aoColumns": columns,
-				       "sScrollX": "100%",
-				       "bScrollCollapse": true,
-				       "bPaginate": false,
-				       "sDom": '<"#panel"if>t'});
+    var table = $('#table').dataTable({
+	"aaData": data, 
+	"aoColumns": columns,
+	"sScrollX": "100%",
+	"bScrollCollapse": true,
+	"bPaginate": false,
+	"sDom": '<"#panel"if>t',
+	"aaSorting": [[col_object['Year'], 'asc'],
+		      [col_object['Authors'], 'asc']],
+	"fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+	    nRow.className = aData[col_object['Great papers']] == "" ? "not-great" : "great";
+	}
+    });
 
     // Add the filter    
     $('<div id="year-slider"></div>').appendTo('#panel').slider({
