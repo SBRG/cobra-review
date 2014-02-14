@@ -1,109 +1,36 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
   <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-    <title>Cobra Review</title>
+    <meta charset="utf-8">
+    <title></title>
 
-    <style type="text/css">
-      .small-font { font-size: 8pt }
-      .medium-font { font-size: 10pt }
-      .blue-background { background: rgb(140, 140, 255) }
-      .white-background { background: #fff; }
-      .popup {
-      border: 2px solid grey;
-      background-color:rgb(255,255,255);
-      position:absolute;
-      -webkit-border-radius: 5px;
-      -moz-border-radius: 5px;
-      border-radius: 5px;
-      }
-
-      #panel
-      {
-      padding:0px;
-      background-color:rgb(228, 233, 245);
-      border:solid 2px grey;
-      }
-
-      #loading {
-      display:block;
-      position:absolute;
-      left:50%;
-      margin-left:-50px;
-      width: 70px;
-      padding: 5px 11px 4px 9px;
-      top:400px; 
-      z-index:50;
-      background-color:#fafafa;
-      -webkit-border-radius: 2px;
-      -moz-border-radius: 2px;
-      border-radius: 2px;
-      text-align: center;
-      }
-
-      .center {
-      margin:0px auto;
-      }
-
-      .control {
-      width: 400px;
-      height: 30px;
-      float: right;
-      }
-      .wider {
-      width: 900px;
-      }
-
-      .row {
-      style=height:50%;
-      float:left;
-      }
-      .google-visualization-controls-stringfilter { height: 100% }
-      .google-visualization-controls-label { width: 400px; position: absolute; right: 210px; text-align:right }
-      .google-visualization-controls-rangefilter .google-visualization-controls-label { right: 347px; padding: 0.3em 0 0 0;}
-      .charts-inline-block { float:right; margin-top: 4px; margin-right: 80px }
-      .charts-inline-block input { width: 117px; }
-      .google-visualization-controls-rangefilter .charts-inline-block { margin-top: 4px; margin-right: 0 }
-
-    </style>
-
-    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js" type="text/javascript"></script>
     <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.min.js" type="text/javascript"></script>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
-    <script src="jquery.ba-throttle-debounce.min.js" type="text/javascript"></script>
+
+    <!-- Google chart -->
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+
+    <!-- DataTables -->
+    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+
+    <link rel="stylesheet" href="main.css" />
 
   </head>
-  <body style="font-family: Helvetica; border: 0 none;">
+  <body>
 
-    <div id="slow" style="float:left">
-      Loading slowly? Try with only <a href="index-20.html">20 results per page</a>.
-    </div>
-
-    <div id="dashboard" style="margin: 0px auto; width: 100%">
+    <div id="dashboard">
       <div id="buttons" style="float: right; margin: 0px auto; height: 50px;">
         <a id="filter-button" style="float: right; margin-right:20px;">filter</a>
       </div>
-      <div id="panel" style="float: left; margin: 0px auto; width: 100%; min-width:1800px; display:block;">
-        <div id="filters" style="width:900px; float:left;">
-	  <div class="control wider">
-            <div id="yearControl" class="center" style="width:360px"></div>
-	  </div>
-          <div id="authorControl" class="control"></div>
-          <div id="journalControl" class="control"></div>
-          <div id="titleControl" class="control"></div>
-          <div id="keywordControl" class="control"></div>
-        </div>
-      </div>
 
-      <div id="table" style="width:100%; height:100%; float: left; min-width:1800px"></div>
+      <table id="table"></table>
     </div>
 
     <div id="loading">LOADING</div>
 
     <script type="text/javascript" src="main.js"></script>
-    <script type="text/javascript">
-      load_review('all');
-    </script>
   </body>
 </html>

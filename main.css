@@ -1,0 +1,107 @@
+body {
+    font-family: Helvetica; 
+    border: 0 none;
+    overflow-x: hidden;
+}
+
+#map {
+    display:none; 
+    padding: 5px;
+}
+
+#terms {
+    display: none;
+    padding:30px 5%;
+    overflow:scroll;
+}
+
+.highlighted {
+    background:rgb(248, 218, 185);
+    padding: 3px;
+}
+
+#charts {
+    display:none;
+    padding:10px;
+    overflow: hidden;
+}
+
+#dashboard {
+    margin: 0px auto;
+    width: 98%;
+}
+
+.small-font { font-size: 8pt }
+.medium-font { font-size: 10pt }
+.blue-background { background: rgb(140, 140, 255) }
+.white-background { background: #fff; }
+.popup {
+    border: 2px solid grey;
+    background-color:rgb(255,255,255);
+    position:absolute;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+#panel
+{
+    padding:8px 10px 4px 10px;
+    background-color:rgb(228, 233, 245);
+    border:solid 1px grey;
+    height: 22px;
+}
+
+#loading {
+    display:block;
+    position:absolute;
+    left:50%;
+    margin-left:-50px;
+    width: 70px;
+    padding: 5px 11px 4px 9px;
+    top:400px; 
+    z-index:50;
+    background-color:#fafafa;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    text-align: center;
+}
+
+#year-slider {
+    width: 200px;
+    float: right;
+    margin-right: 40px;
+    margin-left: 10px;
+}
+
+.right {
+    float: right;
+    margin-right: 15px;
+ }
+#year-text {
+    color: #685C5C;
+}
+
+.center {
+    margin:0px auto;
+}
+
+.control {
+    width: 400px;
+    height: 30px;
+    float: right;
+}
+
+.great.odd {
+    background-color: #F8DAB9 !important;
+}
+.great.even {
+    background-color: #F5E6D6 !important;
+}
+
+.dataTable {
+    font-size: 13px;
+}
+
+

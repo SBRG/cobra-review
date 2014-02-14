@@ -62,6 +62,12 @@ def dump_spreadsheet(papers):
     # fix case
     papers['Journal'] = papers['Journal'].map(lambda x: x.title())
     papers['Title'] = papers['Title'].map(lambda x: transform_sentence_case([x])[0])
+
+    # add all authors
+    name = 'authors_all'
+    papers[name] = papers['Authors']
+    header.append({'name': name, 'type': 'string'})
+    cols.append(name)
         
     def title_except(s, min_length=4):
         word_list = re.split(' ', s)
