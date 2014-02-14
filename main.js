@@ -82,11 +82,11 @@ function drawVisualization(json) {
 	"sDom": '<"#panel"if>t',
 	"aaSorting": [[col_object['Year'], 'asc'],
 		      [col_object['Authors'], 'asc']],
-	"fnRowCallback": function( nRow, aData, iDisplayIndex ) {
-	    nRow.className = aData[col_object['Great papers']] == "" ? 
-		nRow.className : 
-		nRow.className + " great";
-	}
+	// "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+	//     nRow.className = aData[col_object['Great papers']] == "" ? 
+	// 	nRow.className : 
+	// 	nRow.className + " great";
+	// }
     });
 
     // Add the filter    
