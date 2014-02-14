@@ -168,7 +168,7 @@ function drawVisualization(json) {
 	max_year = 0;
     columns.map(function(c) {
 	c.sTitle = c.name;
-	c.bVisible = !(c.name == 'Great papers');
+	c.bVisible = !(c.name == 'Great papers' || c.name == 'authors_all');
 	if (c.name == 'Short Description') c.sWidth = '450px';
 	// if (count < 6) c.bVisible = false;
 	col_object[c.name] = count;
