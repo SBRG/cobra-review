@@ -72,6 +72,12 @@ def dump_spreadsheet(papers):
     papers['Short Description'] = [description if great!="" else ""
                                    for (description, great)
                                    in zip(papers['Short Description'], papers['Great papers'])]
+
+    # add all authors
+    name = 'authors_all'
+    papers[name] = papers['Authors']
+    header.append({'name': name, 'type': 'string'})
+    cols.append(name)
         
     def title_except(s, min_length=4):
         word_list = re.split(' ', s)
