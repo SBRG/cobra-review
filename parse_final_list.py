@@ -91,6 +91,12 @@ def dump_spreadsheet(papers):
 
     # sort by year
     data = list(papers[cols].itertuples(index=False))
+    for i, d in enumerate(data):
+        for j, e in enumerate(d):
+            try:
+                json.dumps(e)
+            except TypeError:
+                data[i][j] = int(e)
     data.sort(key = lambda c: c[4])
     with open(out_file,'w') as file:
         json.dump({'header':header,
