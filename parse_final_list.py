@@ -63,6 +63,9 @@ def dump_spreadsheet(papers):
     papers['Journal'] = papers['Journal'].map(lambda x: x.title())
     papers['Title'] = papers['Title'].map(lambda x: transform_sentence_case([x])[0])
 
+    # fix numpy ints
+    papers['Year'] = papers['Year'].map(int)
+    
     # add all authors
     name = 'authors_all'
     papers[name] = papers['Authors']
