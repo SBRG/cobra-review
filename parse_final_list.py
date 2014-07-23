@@ -6,6 +6,7 @@ from collections import defaultdict
 import json, csv, urllib2, time
 from tl.rename.case import transform_sentence_case
 import re
+import numpy as np
     
 def read_excel(filename, sheet):
     # read excel file
@@ -90,9 +91,14 @@ def dump_spreadsheet(papers):
     papers['Authors'] = papers['Authors'].map(lambda x: et_al(title_except(x)))
 
     # sort by year
-    data = list(papers[cols].itertuples(index=False))
+    data = list([list(x) for x in papers[cols].itertuples(index=False)])
+    # flag = True
     for i, d in enumerate(data):
         for j, e in enumerate(d):
+            # if flag and isinstance(e, int):
+            #     e = np.int32(e)
+            #     data[i][j] = e
+            #     flag = False
             try:
                 json.dumps(e)
             except TypeError:
