@@ -10,8 +10,8 @@ import numpy as np
     
 def read_excel(filename, sheet):
     # read excel file
-    xls = pd.ExcelFile(in_file)
-    papers = xls.parse(sheet, skiprows=1)
+    with open(filename, 'r') as f:
+        papers = pd.io.excel.read_excel(f, skiprows=1)
     # papers = papers.rename(columns={'PMID/filename': 'PMID',
     #                                 'Type of Data?': "High-throughput data integration"})
     papers = papers.dropna(axis=0,how='all').fillna(0)
@@ -65,7 +65,11 @@ def dump_spreadsheet(papers):
     papers['Title'] = papers['Title'].map(lambda x: transform_sentence_case([x])[0])
 
     # fix numpy ints
-    papers['Year'] = papers['Year'].map(int)
+    for y in papers['Year']:
+        try:
+            y = int(y)
+        except ValueError:
+            y = 0
     
     # add all authors
     name = 'authors_all'
@@ -89,6 +93,9 @@ def dump_spreadsheet(papers):
             r = ";<br/>".join(author_list) 
         return r
     papers['Authors'] = papers['Authors'].map(lambda x: et_al(title_except(x)))
+
+    # remove nan
+    papers = papers.fillna(0)
 
     # sort by year
     data = list([list(x) for x in papers[cols].itertuples(index=False)])
@@ -146,7 +153,7 @@ def dump_geo(papers):
         json.dump(array, file)
 
 if __name__ == '__main__':
-    in_file = "spreadsheet/all_P.t._topic_revision_for_database_editing_shared_V1.xls"
+    in_file = "spreadsheet/all_P.t._topic_revision_for_database_editing_shared_V34_11.02.2015.xlsx"
     sheet = "Pt Database"
     papers = read_excel(in_file, sheet)
     dump_spreadsheet(papers)
