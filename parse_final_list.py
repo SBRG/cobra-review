@@ -7,6 +7,7 @@ import json, csv, urllib2, time
 from tl.rename.case import transform_sentence_case
 import re
 import numpy as np
+from os.path import join
     
 def read_excel(filename, sheet):
     # read excel file
@@ -153,7 +154,8 @@ def dump_geo(papers):
         json.dump(array, file)
 
 if __name__ == '__main__':
-    in_file = "spreadsheet/all_P.t._topic_revision_for_database_editing_shared_V34_11.02.2015.xlsx"
+    in_file = join("spreadsheet",
+                   "all_P.t._topic_revision_for_database_editing_shared_V34_11.02.2015.xlsx")
     sheet = "Pt Database"
     papers = read_excel(in_file, sheet)
     dump_spreadsheet(papers)
